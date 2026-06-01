@@ -1,459 +1,367 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Comfort Theory — Why Adults Love Jellycat</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jellycat Story</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-
-  <!-- ══════════════════════════════════
-       UI OVERLAY
-  ══════════════════════════════════ -->
-  <div class="ui-layer">
-    <div class="ui-top-left">
-      <button id="menu-btn" class="icon-btn" aria-label="Open chapter menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-          <path d="M3 6h18M3 12h18M3 18h18"/>
-        </svg>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav id="nav">
+      <button id="hamburger" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-      <span class="ui-page-title" id="ui-page-title">Cover</span>
+      <span id="page-title">Cover</span>
+      <div id="nav-menu">
+        <ul>
+          <li><a href="#page-1" data-page="1">01 - cover</a></li>
+          <li><a href="#page-2" data-page="2">02 - Introduction</a></li>
+          <li><a href="#page-3" data-page="3">03 - World Today</a></li>
+          <li><a href="#page-4" data-page="4">04 - Emotional Needs</a></li>
+          <li><a href="#page-5" data-page="5">05 - What is Jellycat</a></li>
+          <li><a href="#page-6" data-page="6">06 - Why Jellycat Works</a></li>
+          <li>
+            <a href="#page-7" data-page="7">07 — How It Became Popular</a>
+          </li>
+          <li><a href="#page-8" data-page="8">08 — The Deeper Meaning</a></li>
+          <li><a href="#page-9" data-page="9">09 — Reflection</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Progress bar -->
+    <div id="progress-bar-container">
+      <div id="progress-bar"></div>
+      <span id="progress-label">1 / 9</span>
     </div>
-    <div class="progress-track" aria-hidden="true">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-    <div class="bottom-indicator">
-      <span class="bi-title" id="bi-title">Cover</span>
-      <span class="bi-sep">·</span>
-      <span class="bi-pages">
-        <span id="page-current">1</span> / <span id="page-total">9</span>
-      </span>
-    </div>
-  </div>
+    <!-- Book Wrapper -->
+    <div id="book">
+      <!-- ============================================ -->
+      <!-- Page 1 -->
+      <!-- ============================================ -->
 
-  <!-- ══════════════════════════════════
-       MENU DRAWER
-  ══════════════════════════════════ -->
-  <div class="menu-backdrop" id="menu-backdrop"></div>
-  <aside class="menu-drawer" id="menu-drawer" aria-hidden="true">
-    <div class="menu-drawer-header">
-      <span class="menu-drawer-label">Contents</span>
-      <button id="menu-close" class="menu-close-btn" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <nav class="menu-nav" id="menu-nav"><!-- built by JS --></nav>
-  </aside>
-
-
-  <!-- ══════════════════════════════════
-       BOOK  —  9 chapters, reverse DOM order
-       deepest (index 8) first, cover (index 0) last = on top
-  ══════════════════════════════════ -->
-  <div id="book">
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 9  REFLECTION  (index 8 — deepest)
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--reflection" data-index="8" data-title="Reflection">
-      <div class="chapter-inner reflection-inner">
-        <div class="reflection-content">
-
-          <p class="reflect-line reveal-item" style="--rd:0.3s">
-            Maybe people do not hold onto soft toys because they refuse to grow up.
-          </p>
-          <p class="reflect-line reveal-item" style="--rd:1.1s">
-            Maybe they hold onto them because growing up can sometimes feel
-            <em>overwhelming</em>.
-          </p>
-          <p class="reflect-line reveal-item" style="--rd:1.9s">
-            Maybe comfort was never childish.
-          </p>
-          <p class="reflect-line reflect-line--em reveal-item" style="--rd:2.7s">
-            We just simply forgot how important it is<br>
-            to feel emotionally safe.
-          </p>
-
-          <div class="reflect-bunny reveal-item" style="--rd:3.6s" aria-hidden="true">
-            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="100" cy="202" rx="52" ry="56" fill="#FAE8E0" stroke="#E8A598" stroke-width="2"/>
-              <circle  cx="100" cy="128" r="48"            fill="#FAE8E0" stroke="#E8A598" stroke-width="2"/>
-              <ellipse cx="70"  cy="56"  rx="18" ry="50"   fill="#F7D5CF" stroke="#E8A598" stroke-width="1.5"/>
-              <ellipse cx="70"  cy="56"  rx="9"  ry="38"   fill="#F2B5AC"/>
-              <ellipse cx="130" cy="53"  rx="18" ry="50"   fill="#F7D5CF" stroke="#E8A598" stroke-width="1.5"/>
-              <ellipse cx="130" cy="53"  rx="9"  ry="38"   fill="#F2B5AC"/>
-              <path d="M84 123 Q92 115 100 123"  fill="none" stroke="#3D2B1F" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M100 123 Q108 115 116 123" fill="none" stroke="#3D2B1F" stroke-width="2.5" stroke-linecap="round"/>
-              <ellipse cx="100" cy="136" rx="5" ry="3.5" fill="#E8927C"/>
-              <path d="M93 144 Q100 153 107 144"  fill="none" stroke="#E8927C" stroke-width="1.8" stroke-linecap="round"/>
-              <circle cx="78"  cy="132" r="11" fill="#F2B5AC" opacity="0.4"/>
-              <circle cx="122" cy="132" r="11" fill="#F2B5AC" opacity="0.4"/>
-              <ellipse cx="100" cy="206" rx="30" ry="34" fill="#F7D5CF" opacity="0.5"/>
-              <path d="M94 197 Q100 190 106 197 Q112 190 106 206 L100 212 L94 206 Q88 190 94 197Z" fill="#E8927C" opacity="0.8"/>
-            </svg>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 8  THE DEEPER MEANING  (index 7)
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--deeper" data-index="7" data-title="The Deeper Meaning">
-      <div class="ambient" aria-hidden="true">
-        <span class="fdot" style="--fx:7%;--fy:16%;--fs:14px;--fd:0s;--fc:#F5E190"></span>
-        <span class="fdot" style="--fx:87%;--fy:74%;--fs:10px;--fd:0.7s;--fc:#F2C4BE"></span>
-        <span class="fstar" style="--fx:80%;--fy:12%">✦</span>
-        <span class="fstar" style="--fx:16%;--fy:84%">✧</span>
-      </div>
-
-      <div class="chapter-inner deeper-inner">
-        <div class="deeper-text">
-          <h2 class="ch-title reveal-item">Jellycat is<br>more than a toy</h2>
-          <div class="ch-rule reveal-item"></div>
-          <p class="ch-lead reveal-item">
-            For many people, Jellycat is not a purchase — it is a companion.
-          </p>
-          <p class="ch-body reveal-item">
-            These soft objects offer emotional comfort, a form of identity expression,
-            and a quiet way to cope with uncertainty and loneliness. In an overwhelming
-            world, they become small but powerful reminders of warmth and safety.
-          </p>
-          <p class="ch-body reveal-item">
-            When someone names a toy, carries it on a trip, or reaches for it after a
-            hard day — they are not being irrational. They are being
-            <strong>deeply human</strong>.
-          </p>
-        </div>
-
-        <div class="deeper-aside reveal-item">
-          <blockquote>
-            "Objects become transitional symbols — bridges between our inner world
-            and an outer reality that can feel unsafe or unknowable."
-            <cite>— D.W. Winnicott, Psychoanalyst</cite>
-          </blockquote>
-          <div class="deeper-tags">
-            <span class="dtag">Emotional comfort</span>
-            <span class="dtag">Identity expression</span>
-            <span class="dtag">Coping mechanism</span>
-            <span class="dtag">Sense of security</span>
-            <span class="dtag">Companionship</span>
-            <span class="dtag">Warmth &amp; safety</span>
+      <section class="page" id="page-1" data-page="Cover">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/cover.png&quot;)"
+        ></div>
+        <div class="page-content cover-content">
+          <div class="scroll-hint">
+            <span class="scroll-arrow">&#8595;</span>
+            <span class="scroll-label">Scroll down</span>
           </div>
         </div>
-      </div>
-      <div class="page-curl" aria-hidden="true"></div>
-    </section>
+      </section>
 
+      <!-- ============================================ -->
+      <!-- Page 2 -->
+      <!-- ============================================ -->
 
-    <!-- ══════════════════════════════════════════
-         PAGE 7  HOW IT BECAME POPULAR  (index 6)
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--popular" data-index="6" data-title="How It Became Popular">
-
-      <!-- Floating emoji reactions -->
-      <div class="float-reactions" aria-hidden="true">
-        <span class="freact" style="--fl:15%;--fd:0s">❤️</span>
-        <span class="freact" style="--fl:30%;--fd:0.9s">🐰</span>
-        <span class="freact" style="--fl:52%;--fd:1.5s">✨</span>
-        <span class="freact" style="--fl:68%;--fd:0.4s">😭</span>
-        <span class="freact" style="--fl:40%;--fd:2.2s">💕</span>
-        <span class="freact" style="--fl:22%;--fd:1.9s">🔥</span>
-        <span class="freact" style="--fl:78%;--fd:0.8s">🥺</span>
-      </div>
-
-      <div class="chapter-inner popular-inner">
-        <div class="popular-text">
-          <h2 class="ch-title reveal-item">How It Became<br>Popular</h2>
-          <div class="ch-rule reveal-item"></div>
-          <p class="ch-body reveal-item">
-            Social media transformed Jellycat from a children's toy into a global
-            cultural phenomenon. Fans share collections, stories, and creative scenes
-            online — turning Jellycat into a symbol of identity, companionship, and
-            emotional expression.
-          </p>
-          <p class="ch-body reveal-item">
-            Interactive in-store experiences further strengthen emotional connection
-            by including engaging and performing elements. This immersive and creative
-            shopping experience makes Jellycat even more irresistible and captures
-            customers' hearts.
-          </p>
-          <div class="tiktok-stat reveal-item">
-            <span class="tiktok-icon">♪</span>
-            <span>#jellycat — <strong>4.2B views</strong> on TikTok</span>
-          </div>
-        </div>
-
-        <!-- Image placeholders for user to fill -->
-        <div class="popular-images reveal-item">
-          <div class="img-slot">
-            <div class="img-placeholder">
-              <span class="img-ph-icon">🖼</span>
-              <span class="img-ph-label">Add image here</span>
-            </div>
-            <p class="img-caption">Store roleplay scene</p>
-          </div>
-          <div class="img-slot">
-            <div class="img-placeholder">
-              <span class="img-ph-icon">🖼</span>
-              <span class="img-ph-label">Add image here</span>
-            </div>
-            <p class="img-caption">Social media moment</p>
-          </div>
-          <div class="img-slot">
-            <div class="img-placeholder">
-              <span class="img-ph-icon">🖼</span>
-              <span class="img-ph-label">Add image here</span>
-            </div>
-            <p class="img-caption">Unboxing ritual</p>
-          </div>
-        </div>
-      </div>
-      <div class="page-curl" aria-hidden="true"></div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 6  WHY JELLYCAT WORKS  (index 5)
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--why" data-index="5" data-title="Why Jellycat Works">
-      <div class="ambient" aria-hidden="true">
-        <span class="fdot" style="--fx:5%;--fy:25%;--fs:13px;--fd:0.3s;--fc:#F2C4BE"></span>
-        <span class="fdot" style="--fx:88%;--fy:20%;--fs:9px;--fd:1s;--fc:#A8C5A0"></span>
-        <span class="fstar" style="--fx:82%;--fy:85%">✦</span>
-      </div>
-
-      <div class="chapter-inner why-inner">
-        <div class="why-text">
-          <h2 class="ch-title reveal-item">Why Jellycat<br>Works</h2>
-          <div class="ch-rule reveal-item"></div>
-          <p class="ch-body reveal-item">
-            Plush toys can act as emotional support, offering psychological comfort
-            and a sense of security. Their softness, familiarity, and nostalgic qualities
-            help reduce anxiety, also stimulate childhood memories and reconnect the
-            feeling of warmth and tranquillity.
-          </p>
-          <p class="ch-body reveal-item">
-            By giving each toy a name, personality, and rich expressions — as if it
-            had been given a human nature — Jellycat enhances the sense of connection
-            through <em>anthropomorphic design</em>.
+      <section class="page" id="page-2" data-page="Introduction">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/hook.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <h2>Why do adults still need soft things?</h2>
+          <p>
+            This is an interactive story about Jellycat, comfort, loneliness,
+            and emotional connection in modern life.
           </p>
         </div>
+      </section>
 
-        <div class="why-cards">
-          <div class="why-card reveal-item" style="--wd:0.4s">
-            <div class="why-icon">🧸</div>
-            <h3>Softness</h3>
-            <p>Physical touch with soft textures reduces cortisol — the stress hormone — within minutes.</p>
-          </div>
-          <div class="why-card reveal-item" style="--wd:0.65s">
-            <div class="why-icon">💭</div>
-            <h3>Anthropomorphism</h3>
-            <p>Names, expressions, and personality create real neurochemical bonds — dopamine, oxytocin, belonging.</p>
-          </div>
-          <div class="why-card reveal-item" style="--wd:0.9s">
-            <div class="why-icon">🌿</div>
-            <h3>Nostalgia</h3>
-            <p>Soft toys reconnect us with childhood feelings of safety, simplicity, and unconditional warmth.</p>
-          </div>
-          <div class="why-card reveal-item" style="--wd:1.15s">
-            <div class="why-icon">🧠</div>
-            <h3>Psychology</h3>
-            <p>Winnicott's "transitional objects" theory: comfort objects are a healthy, lifelong emotional tool.</p>
-          </div>
-        </div>
-      </div>
-      <div class="page-curl" aria-hidden="true"></div>
-    </section>
+      <!-- ============================================ -->
+      <!-- Page 3: The World Today -->
+      <!-- ============================================ -->
 
-
-    <!-- ══════════════════════════════════════════
-         PAGE 5  WHAT IS JELLYCAT  (index 4)
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--jellycat" data-index="4" data-title="What is Jellycat">
-      <div class="ambient" aria-hidden="true">
-        <span class="fdot" style="--fx:6%;--fy:20%;--fs:12px;--fd:0s;--fc:#A8C5A0"></span>
-        <span class="fdot" style="--fx:90%;--fy:65%;--fs:9px;--fd:0.6s;--fc:#F5E190"></span>
-      </div>
-
-      <div class="chapter-inner jellycat-inner">
-        <div class="jellycat-text">
-          <h2 class="ch-title reveal-item">What is<br>Jellycat</h2>
-          <div class="ch-rule reveal-item"></div>
-          <p class="ch-body reveal-item">
-            Founded in <strong>London in 1999</strong>, Jellycat was originally designed
-            as a comfort toy for children. Unlike traditional plush toys, Jellycat combines
-            soft textures with playful and unusual designs — ranging from animals to food
-            and everyday objects.
-          </p>
-          <p class="ch-body reveal-item">
-            Each character has a name, a personality, and an expression that invites
-            connection — carefully considered companions, each designed to be held,
-            loved, and remembered.
+      <section class="page" id="page-3" data-page-title="The World Today">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p3.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <h2>In a world that never slows down...</h2>
+          <p>
+            In today's fast-paced digital world, surrounded by endless
+            information and constant change, people feel overwhelmed. With
+            ongoing political and economic shifts, many live in uncertainty, and
+            many experience deep-seated stress and emotional exhaustion.
           </p>
         </div>
+      </section>
 
-        <!-- Toys appear one-by-one -->
-        <div class="toy-grid">
-          <div class="toy-item reveal-item" style="--wd:0.3s"><span class="toy-emoji">🐰</span><span class="toy-name">Bashful Bunny</span></div>
-          <div class="toy-item reveal-item" style="--wd:0.55s"><span class="toy-emoji">🐻</span><span class="toy-name">Bumbly Bear</span></div>
-          <div class="toy-item reveal-item" style="--wd:0.8s"><span class="toy-emoji">🐘</span><span class="toy-name">Ellie Elephant</span></div>
-          <div class="toy-item reveal-item" style="--wd:1.05s"><span class="toy-emoji">🦊</span><span class="toy-name">Fuddlewuddle Fox</span></div>
-          <div class="toy-item reveal-item" style="--wd:1.3s"><span class="toy-emoji">🐱</span><span class="toy-name">Cozee Cat</span></div>
-          <div class="toy-item reveal-item" style="--wd:1.55s"><span class="toy-emoji">🦆</span><span class="toy-name">Ducky</span></div>
-          <div class="toy-item reveal-item" style="--wd:1.8s"><span class="toy-emoji">🥑</span><span class="toy-name">Amuseable Avocado</span></div>
-          <div class="toy-item reveal-item" style="--wd:2.05s"><span class="toy-emoji">🍄</span><span class="toy-name">Amuseable Mushroom</span></div>
+      <!-- ============================================ -->
+      <!-- Page 4: Emotional Needs -->
+      <!-- ============================================ -->
+
+      <!-- Step 1 -->
+      <section class="page" id="page-4" data-page-title="Emotional Needs">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p4-1.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <h2>Sometimes, the hardest part is not being physically alone.</h2>
         </div>
-      </div>
-      <div class="page-curl" aria-hidden="true"></div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 4  EMOTIONAL NEEDS  (index 3)
-         Dark page — silhouette + gradual text reveal
-         "surrounding black, person in middle, text comes out"
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--emotional" data-index="3" data-title="Emotional Needs">
-
-      <!-- Faint person silhouette in the centre-left -->
-      <div class="emot-silhouette" aria-hidden="true">
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Head -->
-          <circle cx="110" cy="44" r="34" fill="rgba(255,255,255,0.055)"/>
-          <!-- Body hunched -->
-          <ellipse cx="110" cy="140" rx="52" ry="68" fill="rgba(255,255,255,0.05)" transform="rotate(-5 110 140)"/>
-          <!-- Legs drawn up -->
-          <ellipse cx="74"  cy="212" rx="36" ry="22" fill="rgba(255,255,255,0.045)" transform="rotate(-30 74 212)"/>
-          <ellipse cx="146" cy="212" rx="36" ry="22" fill="rgba(255,255,255,0.045)" transform="rotate(30 146 212)"/>
-          <!-- Left arm wrapping -->
-          <ellipse cx="64"  cy="148" rx="16" ry="38" fill="rgba(255,255,255,0.045)" transform="rotate(-20 64 148)"/>
-          <!-- Right arm wrapping -->
-          <ellipse cx="156" cy="148" rx="16" ry="38" fill="rgba(255,255,255,0.045)" transform="rotate(20 156 148)"/>
-          <!-- Jellycat being held — round, soft -->
-          <circle cx="110" cy="162" r="34" fill="rgba(255,255,255,0.04)"/>
-          <!-- Tiny ears on the jellycat -->
-          <ellipse cx="94"  cy="132" rx="8" ry="18" fill="rgba(255,255,255,0.04)"/>
-          <ellipse cx="126" cy="130" rx="8" ry="18" fill="rgba(255,255,255,0.04)"/>
-        </svg>
-      </div>
-
-      <div class="chapter-inner emotional-inner">
-        <div class="emot-text">
-
-          <p class="emot-quote reveal-item" style="--rd:0.4s">
-            "Sometimes, the hardest part is not being physically alone.<br>
-            It is to pretend that everything is fine."
-          </p>
-
-          <div class="emot-three reveal-item" style="--rd:1.3s">
-            <p>Too much information.</p>
-            <p>Too many expectations.</p>
-            <p>Too little time to breathe.</p>
-          </div>
-
-          <p class="emot-body reveal-item" style="--rd:2.2s">
+      </section>
+      <!-- Step 2: Content change -->
+      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p4-1.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <h2>It's pretending everything is fine.</h2>
+        </div>
+      </section>
+      <!-- Step 3: Background & content change -->
+      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p4-2.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <ul class="text-list">
+            <li>Too much information.</li>
+            <li>Too many expectations.</li>
+            <li>Too little time to breathe.</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Step 4: Background & content change-->
+      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p4-3.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <p>
             Many people quietly carry stress, loneliness, and emotional fatigue.
-            Therefore, people silently seek solace — something gentle enough to provide
-            a sense of security and warmth when the world becomes unbearable.
+          </p>
+        </div>
+      </section>
+      <!-- Step 5: Background & content change-->
+      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p4-4.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <p>Therefore, people silently seek solace</p>
+          <p>
+            something gentle enough to provide a sense of security and warmth
+            when the world becomes unbearable.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- Page 5: What is Jellycat -->
+      <!-- ============================================ -->
+
+      <!-- Step 1 -->
+      <section class="page" id="page-5" data-page-title="What is Jellycat">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p5-1.png&quot;)"
+        ></div>
+        <div class="page-content">
+          <p>
+            Founded in London in 1999, Jellycat was originally designed as a
+            comfort toy for children.
+          </p>
+        </div>
+      </section>
+      <!-- Step 2 -->
+      <section
+        class="page page-chapter-5"
+        id="page-5b"
+        data-page-title="What is Jellycat"
+      >
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p5-2.png&quot;)"
+        ></div>
+        <div class="page-content page-content--5b">
+          <p class="jellycat-desc">
+            Unlike traditional plush toys, Jellycat combines soft textures with
+            playful and unusual designs, ranging from animals to food and
+            everyday objects.
           </p>
 
+          <!-- Toy images -->
+          <div class="toy-grid">
+            <div class="toy-item" style="--toy-delay: 1s">
+              <img src="image/toy-1.png" alt="Animal toy" />
+            </div>
+            <div class="toy-item" style="--toy-delay: 1.4s">
+              <img src="image/toy-2.png" alt="Food toy" />
+            </div>
+            <div class="toy-item" style="--toy-delay: 1.8s">
+              <img src="image/toy-3.png" alt="Everyday object toy" />
+            </div>
+            <div class="toy-item" style="--toy-delay: 2.2s">
+              <img src="image/toy-4.png" alt="More Jellycat toys" />
+            </div>
+          </div>
+
+          <!-- ============================================ -->
+          <!-- Page 6: Why Jellycat works -->
+          <!-- ============================================ -->
+
+          <section
+            class="page"
+            id="page-6"
+            data-page-title="Why Jellycat Works"
+          >
+            <div
+              class="page-background"
+              style="background-image: url(&quot;image/p6.png&quot;)"
+            ></div>
+
+            <div class="page-content page-content--6a">
+              <!-- Right column: body text & toy cards -->
+              <div class="p6-right">
+                <h2 class="p6-title">Why Jellycat Works</h2>
+
+                <p>
+                  Plush toys can act as
+                  <span class="highlight">emotional support</span>, offering
+                  psychological comfort and a
+                  <span class="highlight">sense of security</span>.
+                </p>
+                <p>
+                  Their softness, familiarity, and nostalgic qualities help
+                  reduce anxiety, also stimulate childhood memories and
+                  reconnect the feeling of warmth and tranquillity.
+                </p>
+                <p>
+                  By giving each toy a name, personality, and rich expressions,
+                  as if it had been given a human nature, this enhances the
+                  sense of connection through
+                  <span class="highlight">anthropomorphic design</span>.
+                </p>
+
+                <!-- Toy personality cards -->
+                <p class="toy-cards-label">
+                  Each Jellycat has a name and a personality
+                </p>
+
+                <div class="toy-cards">
+                  <div class="toy-card">
+                    <img src="image/card-1.png" alt="Bashful Bunny" />
+                  </div>
+
+                  <div class="toy-card">
+                    <img src="image/card-2.png" alt="Bartholomew bear" />
+                  </div>
+
+                  <div class="toy-card">
+                    <img src="image/card-3.png" alt="Amuseables Peanut" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 6b: characteristic labels -->
+          <section
+            class="page page-chapter-6"
+            id="page-6b"
+            data-page-title="Why Jellycat Works"
+          >
+            <div
+              class="page-background"
+              style="background-image: url(&quot;image/p6.png&quot;)"
+            ></div>
+            <div class="page-content page-content--6b">
+              <div class="characteristic-labels">
+                <!-- Top-left of bunny -->
+                <div
+                  class="char-label char-label--softness"
+                  style="--label-delay: 1s"
+                >
+                  <img
+                    src="image/label-1.png"
+                    alt=""
+                    aria-hidden="true"
+                    class="label-bg"
+                  />
+                  <div class="label-text">
+                    <h4>Softness</h4>
+                    <p>Gentle textures create a calming tactile experience.</p>
+                  </div>
+                </div>
+
+                <!-- Middle-left of bunny -->
+                <div
+                  class="char-label char-label--familiarity"
+                  style="--label-delay: 1.5s"
+                >
+                  <img
+                    src="image/label-2.png"
+                    alt=""
+                    aria-hidden="true"
+                    class="label-bg"
+                  />
+                  <div class="label-text">
+                    <h4>Familiarity</h4>
+                    <p>Its simple shape feels safe and recognisable.</p>
+                  </div>
+                </div>
+
+                <!-- Bottom-left of bunny -->
+                <div
+                  class="char-label char-label--nostalgia"
+                  style="--label-delay: 2s"
+                >
+                  <img
+                    src="image/label-3.png"
+                    alt=""
+                    aria-hidden="true"
+                    class="label-bg"
+                  />
+                  <div class="label-text">
+                    <h4>Nostalgia</h4>
+                    <p>Reconnects us with childhood warmth and memories.</p>
+                  </div>
+                </div>
+
+                <!-- Right side of bunny -->
+                <div
+                  class="char-label char-label--security"
+                  style="--label-delay: 2.5s"
+                >
+                  <img
+                    src="image/label-4.png"
+                    alt=""
+                    aria-hidden="true"
+                    class="label-bg"
+                  />
+                  <div class="label-text">
+                    <h4>Security</h4>
+                    <p>
+                      Holding something soft can help reduce anxiety and bring a
+                      sense of peace.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- end .characteristic-labels -->
+            </div>
+          </section>
         </div>
-      </div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 3  THE WORLD TODAY  (index 2)
-         bg: p2.png — figure LEFT, dark blank RIGHT
-         Text on the RIGHT
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--world has-image image-right-text"
-             data-index="2" data-title="The World Today">
-
-      <div class="chapter-inner world-inner">
-        <div class="image-page-text">
-
-          <h2 class="ch-title reveal-item" style="--rd:0.2s; color:#fff">
-            In a world that<br>never slows down…
-          </h2>
-          <div class="ch-rule reveal-item" style="--rd:0.6s; background:rgba(255,255,255,0.55)"></div>
-
-          <p class="ch-body reveal-item" style="--rd:0.9s; color:rgba(255,255,255,0.85)">
-            In today's fast-paced digital world, surrounded by endless information
-            and constant change, people feel overwhelmed.
-          </p>
-          <p class="ch-body reveal-item" style="--rd:1.3s; color:rgba(255,255,255,0.85)">
-            With ongoing political and economic shifts, many live in uncertainty,
-            and many experience deep-seated stress and emotional exhaustion.
-          </p>
-
-        </div>
-      </div>
-
-      <div class="page-curl page-curl--dark" aria-hidden="true"></div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 2  INTRODUCTION  (index 1)
-         bg: hook.png — blank LEFT, subway scene RIGHT
-         Title fades in slow, subtitle fades in later
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--intro has-image image-left-text"
-             data-index="1" data-title="Introduction">
-
-      <div class="chapter-inner intro-inner">
-        <div class="image-page-text">
-
-          <!-- Appears first, extra slow -->
-          <h2 class="ch-title intro-title reveal-item" style="--rd:0.3s">
-            Why do adults still<br>need soft things?
-          </h2>
-
-          <!-- Appears later, also slow -->
-          <p class="ch-lead intro-lead reveal-item" style="--rd:1.8s">
-            This is an interactive story about Jellycat, comfort,
-            loneliness, and emotional connection in modern life.
-          </p>
-
-        </div>
-      </div>
-
-      <div class="page-curl" aria-hidden="true"></div>
-    </section>
-
-
-    <!-- ══════════════════════════════════════════
-         PAGE 1  COVER  (index 0 — on top)
-         bg: cover.png — image speaks for itself
-    ══════════════════════════════════════════ -->
-    <section class="chapter chapter--cover has-image"
-             data-index="0" data-title="Cover">
-      <div class="chapter-inner cover-inner">
-        <div class="scroll-cue reveal-item" style="--rd:0.5s">
-          <span>Scroll down</span>
-          <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-
-  </div><!-- #book -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="script.js"></script>
-</body>
+      </section>
+    </div>
+  </body>
 </html>
