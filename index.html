@@ -426,13 +426,11 @@
           style="background-image: url(&quot;image/p8.png&quot;)"
         ></div>
 
-        <!-- Dim overlay -->
+        <!-- Dim overlay + warm spotlight (animate on entry) -->
         <div class="p8-dim-overlay"></div>
-
-        <!-- Warm spotlight  -->
         <div class="p8-spotlight"></div>
 
-        <!-- Left column: main title -->
+        <!-- Top-left: main title (fades in on entry) -->
         <div class="p8-left">
           <h2 class="p8-title">
             Jellycat is<br />
@@ -440,89 +438,56 @@
           </h2>
         </div>
 
-        <!-- Right column: body text -->
-        <div class="p8-right p8-body-text">
-          <p>
-            For many people, Jellycat is a
-            <span class="highlight-rose">companion</span> that provides
-            emotional comfort, a way to express
-            <span class="highlight-rose">identity</span>, and a means to
-            <span class="highlight-rose">cope</span> with
-            <span class="highlight-rose">uncertainty and loneliness</span>.
-            These objects become small reminders of
-            <span class="highlight-rose">warmth</span> and
-            <span class="highlight-rose">safety</span> in an overwhelming world.
-          </p>
-        </div>
-      </section>
-
-      <!--
-      Step 8b: three labels -->
-      <section
-        class="page page-chapter-8"
-        id="page-8b"
-        data-page-title="The Deeper Meaning"
-      >
-        <!-- Same background, no overlay or spotlight on this step -->
-        <div
-          class="page-background"
-          style="background-image: url(&quot;image/p8.png&quot;)"
-        ></div>
-
-        <!-- Persist the title so the left side stays consistent -->
-        <div class="p8-left">
-          <h2 class="p8-title">
-            Jellycat is<br />
-            <span class="p8-title-highlight">more</span> than a toy.
-          </h2>
-        </div>
-
-        <!-- Right column: meaning labels + final message -->
+        <!-- Right column: labels + final message (reveal on scroll) -->
         <div class="p8-right">
-          <div class="meaning-labels">
-            <!-- Label 1: Companion -->
-            <div class="meaning-label" style="--label-delay: 0.3s">
-              <div class="meaning-label__icon">
-                <!-- Icon image you made -->
-                <img src="image/icon-1.png" alt="" aria-hidden="true" />
+          <div class="reveal p8-reveal" data-step="1">
+            <div class="meaning-labels">
+              <!-- Label 1: Companion -->
+              <div class="meaning-label" style="--label-delay: 0s">
+                <div
+                  class="meaning-label__icon meaning-label__icon--1"
+                  aria-hidden="true"
+                ></div>
+                <div class="meaning-label__text">
+                  <h3 class="meaning-label__title">COMPANION</h3>
+                  <p>A quiet presence when people feel alone.</p>
+                </div>
               </div>
-              <div class="meaning-label__text">
-                <h3 class="meaning-label__title">COMPANION</h3>
-                <p>A quiet presence when people feel alone.</p>
+
+              <!-- Label 2: Identity -->
+              <div class="meaning-label" style="--label-delay: 0.6s">
+                <div
+                  class="meaning-label__icon meaning-label__icon--2"
+                  aria-hidden="true"
+                ></div>
+                <div class="meaning-label__text">
+                  <h3 class="meaning-label__title">IDENTITY</h3>
+                  <p>
+                    A way to express softness, personality, and emotional taste.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Label 3: Comfort -->
+              <div class="meaning-label" style="--label-delay: 1.2s">
+                <div
+                  class="meaning-label__icon meaning-label__icon--3"
+                  aria-hidden="true"
+                ></div>
+                <div class="meaning-label__text">
+                  <h3 class="meaning-label__title">COMFORT</h3>
+                  <p>A small source of warmth when life feels uncertain.</p>
+                </div>
               </div>
             </div>
 
-            <!-- Label 2: Identity -->
-            <div class="meaning-label" style="--label-delay: 0.9s">
-              <div class="meaning-label__icon">
-                <img src="image/icon-2.png" alt="" aria-hidden="true" />
-              </div>
-              <div class="meaning-label__text">
-                <h3 class="meaning-label__title">IDENTITY</h3>
-                <p>
-                  A way to express softness, personality, and emotional taste.
-                </p>
-              </div>
+            <!-- Final message — appears after the three labels -->
+            <div class="p8-final-message" style="--label-delay: 2s">
+              <img
+                src="image/final-message.png"
+                alt="Maybe comfort was never childish — only human."
+              />
             </div>
-
-            <!-- Label 3: Comfort -->
-            <div class="meaning-label" style="--label-delay: 1.5s">
-              <div class="meaning-label__icon">
-                <img src="image/icon-3.png" alt="" aria-hidden="true" />
-              </div>
-              <div class="meaning-label__text">
-                <h3 class="meaning-label__title">COMFORT</h3>
-                <p>A small source of warmth when life feels uncertain.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Final message -->
-          <div class="p8-final-message" style="--label-delay: 2.2s">
-            <img
-              src="image/final-message.png"
-              alt="Maybe comfort was never childish — only human."
-            />
           </div>
         </div>
       </section>
