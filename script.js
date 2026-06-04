@@ -31,12 +31,41 @@ function getReveals(pageEl) {
   );
 }
 
+/* Hide a page's reveal steps so their entrance animation can replay */
+function resetReveals(pageEl) {
+  getReveals(pageEl).forEach((el) => el.classList.remove("is-revealed"));
+}
+
+/* The chapter (1–9) a section belongs to */
+function chapterOf(section) {
+  return pageChapterMap[section.id] || getChapterFromClasses(section);
+}
+
+/* True when moving between two steps of the same fade sequence (e.g. page 4):
+   these cross-dissolve instead of doing the 3D page flip. */
+function isFadeStep(a, b) {
+  return (
+    a.classList.contains("fade-step") &&
+    b.classList.contains("fade-step") &&
+    chapterOf(a) === chapterOf(b)
+  );
+}
+
+/* Run a swipe that was queued while a transition was still in flight */
+function drainPending() {
+  if (pendingNav === 0) return;
+  const dir = pendingNav;
+  pendingNav = 0;
+  requestAnimationFrame(() => (dir > 0 ? goForward() : goBackward()));
+}
+
 /* ============================================
    STATE
    ============================================ */
 
 let currentIndex = 0;
 let isAnimating = false;
+let pendingNav = 0; /* a deliberate swipe that arrived mid-flip: -1 back, +1 fwd */
 const TOTAL_CHAPTERS = 9;
 
 /* ============================================
@@ -86,6 +115,48 @@ function showPage(newIndex, direction, revealAll = false) {
     return;
   }
 
+  /* Reset the incoming page's steps so they animate in again on re-entry */
+  resetReveals(newPage);
+
+  /* — Same-chapter fade step (page 4): cross-dissolve, no page flip — */
+  if (isFadeStep(oldPage, newPage)) {
+    const FADE_DURATION = 600;
+
+    /* New step waits on top at 0; old step sits beneath at full opacity */
+    newPage.classList.add("is-current");
+    newPage.style.opacity = "0";
+    newPage.style.zIndex = "10";
+    newPage.style.pointerEvents = "auto";
+    oldPage.style.opacity = "1";
+    oldPage.style.zIndex = "9";
+
+    /* Lock in the starting opacities before transitioning */
+    void document.body.offsetWidth;
+
+    newPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
+    oldPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
+    newPage.classList.add("is-active"); /* starts the step-5 delayed line clock */
+    newPage.style.opacity = "1";
+    oldPage.style.opacity = "0";
+
+    isAnimating = true;
+
+    setTimeout(() => {
+      oldPage.style.transition = "";
+      newPage.style.transition = "";
+      oldPage.style.opacity = "0";
+      oldPage.style.zIndex = "0";
+
+      currentIndex = newIndex;
+      isAnimating = false;
+
+      updateNav(newIndex);
+      triggerPageAnimations(newPage, direction, revealAll);
+      drainPending();
+    }, FADE_DURATION);
+    return;
+  }
+
   /* Pre-show the incoming page underneath */
   newPage.classList.add("is-next");
   newPage.style.opacity = "1";
@@ -119,6 +190,7 @@ function showPage(newIndex, direction, revealAll = false) {
 
     updateNav(newIndex);
     triggerPageAnimations(newPage, direction, revealAll);
+    drainPending();
   }, FLIP_DURATION);
 }
 
@@ -245,11 +317,19 @@ function setupScrollListener() {
     }, 120);
 
     if (!isNewGesture) return; /* swallow the momentum tail → no double flip */
-    if (isAnimating) return; /* don't interrupt a flip already running */
 
-    if (e.deltaY > 0) {
+    const dir = e.deltaY > 0 ? 1 : -1;
+
+    /* A flip is still running: remember this deliberate swipe and fire it
+       the moment the flip lands, so quick successive scrolls aren't lost. */
+    if (isAnimating) {
+      pendingNav = dir;
+      return;
+    }
+
+    if (dir > 0) {
       goForward();
-    } else if (e.deltaY < 0) {
+    } else {
       goBackward();
     }
   }

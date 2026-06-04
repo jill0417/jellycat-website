@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -92,9 +92,11 @@
           class="page-background"
           style="background-image: url(&quot;image/p3.png&quot;)"
         ></div>
-        <div class="page-content">
-          <h2>In a world that never slows down...</h2>
-          <p>
+        <div class="page-content page-content--3">
+          <h2 class="reveal" data-step="1">
+            In a world that never slows down...
+          </h2>
+          <p class="reveal" data-step="2">
             In today's fast-paced digital world, surrounded by endless
             information and constant change, people feel overwhelmed. With
             ongoing political and economic shifts, many live in uncertainty, and
@@ -108,7 +110,11 @@
       <!-- ============================================ -->
 
       <!-- Step 1 -->
-      <section class="page" id="page-4" data-page-title="Emotional Needs">
+      <section
+        class="page fade-step"
+        id="page-4"
+        data-page-title="Emotional Needs"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p4-1.png&quot;)"
@@ -118,7 +124,11 @@
         </div>
       </section>
       <!-- Step 2: Content change -->
-      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+      <section
+        class="page page-chapter-4 fade-step"
+        id="page-4-step-2"
+        data-page-title="Emotional Needs"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p4-1.png&quot;)"
@@ -128,7 +138,10 @@
         </div>
       </section>
       <!-- Step 3: Background & content change -->
-      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+      <section
+        class="page page-chapter-4 fade-step"
+        data-page-title="Emotional Needs"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p4-2.png&quot;)"
@@ -142,7 +155,10 @@
         </div>
       </section>
       <!-- Step 4: Background & content change-->
-      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+      <section
+        class="page page-chapter-4 fade-step"
+        data-page-title="Emotional Needs"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p4-3.png&quot;)"
@@ -154,15 +170,19 @@
         </div>
       </section>
       <!-- Step 5: Background & content change-->
-      <section class="page page-chapter-4" data-page-title="Emotional Needs">
+      <section
+        class="page page-chapter-4 fade-step"
+        id="page-4-step-5"
+        data-page-title="Emotional Needs"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p4-4.png&quot;)"
         ></div>
         <div class="page-content">
-          <p>Therefore, people silently seek solace</p>
-          <p>
-            something gentle enough to provide a sense of security and warmth
+          <p class="p4-line-1">Therefore, people silently seek solace</p>
+          <p class="p4-delayed">
+            Something gentle enough to provide a sense of security and warmth
             when the world becomes unbearable.
           </p>
         </div>
@@ -173,21 +193,25 @@
       <!-- ============================================ -->
 
       <!-- Step 1 -->
-      <section class="page" id="page-5" data-page-title="What is Jellycat">
+      <section
+        class="page fade-step"
+        id="page-5"
+        data-page-title="What is Jellycat"
+      >
         <div
           class="page-background"
           style="background-image: url(&quot;image/p5-1.png&quot;)"
         ></div>
         <div class="page-content">
           <p>
-            Founded in London in 1999, Jellycat was originally designed as a
-            comfort toy for children.
+            Founded in London in <span class="accent">1999</span>, Jellycat was
+            originally designed as a comfort toy for children.
           </p>
         </div>
       </section>
       <!-- Step 2 -->
       <section
-        class="page page-chapter-5"
+        class="page page-chapter-5 fade-step"
         id="page-5b"
         data-page-title="What is Jellycat"
       >
@@ -196,11 +220,20 @@
           style="background-image: url(&quot;image/p5-2.png&quot;)"
         ></div>
         <div class="page-content page-content--5b">
-          <p class="jellycat-desc">
-            Unlike traditional plush toys, Jellycat combines soft textures with
-            playful and unusual designs, ranging from animals to food and
-            everyday objects.
-          </p>
+          <div class="desc-wrap">
+            <img
+              class="desc-bg"
+              src="image/p5-text-background.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <p class="jellycat-desc">
+              Unlike traditional plush toys, Jellycat combines
+              <span class="accent">soft textures</span> with
+              <span class="accent">playful and unusual designs</span>, ranging
+              from animals to food and everyday objects.
+            </p>
+          </div>
 
           <!-- Toy images -->
           <div class="toy-grid">
@@ -224,147 +257,143 @@
       <!-- Page 6: Why Jellycat works -->
       <!-- ============================================ -->
 
-          <section
-            class="page"
-            id="page-6"
-            data-page-title="Why Jellycat Works"
-          >
-            <div
-              class="page-background"
-              style="background-image: url(&quot;image/p6.png&quot;)"
-            ></div>
+      <section class="page" id="page-6" data-page-title="Why Jellycat Works">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p6.png&quot;)"
+        ></div>
 
-            <div class="page-content page-content--6a">
-              <!-- Right column: body text & toy cards -->
-              <div class="p6-right">
-                <h2 class="p6-title">Why Jellycat Works</h2>
+        <div class="page-content page-content--6a">
+          <!-- Right column: body text & toy cards -->
+          <div class="p6-right">
+            <h2 class="p6-title">Why Jellycat Works</h2>
 
-                <p>
-                  Plush toys can act as
-                  <span class="highlight">emotional support</span>, offering
-                  psychological comfort and a
-                  <span class="highlight">sense of security</span>.
-                </p>
-                <p>
-                  Their softness, familiarity, and nostalgic qualities help
-                  reduce anxiety, also stimulate childhood memories and
-                  reconnect the feeling of warmth and tranquillity.
-                </p>
-                <p>
-                  By giving each toy a name, personality, and rich expressions,
-                  as if it had been given a human nature, this enhances the
-                  sense of connection through
-                  <span class="highlight">anthropomorphic design</span>.
-                </p>
+            <p>
+              Plush toys can act as
+              <span class="highlight">emotional support</span>, offering
+              psychological comfort and a
+              <span class="highlight">sense of security</span>.
+            </p>
+            <p>
+              Their softness, familiarity, and nostalgic qualities help reduce
+              anxiety, also stimulate childhood memories and reconnect the
+              feeling of warmth and tranquillity.
+            </p>
+            <p>
+              By giving each toy a name, personality, and rich expressions, as
+              if it had been given a human nature, this enhances the sense of
+              connection through
+              <span class="highlight">anthropomorphic design</span>.
+            </p>
 
-                <!-- Toy personality cards -->
-                <p class="toy-cards-label">
-                  Each Jellycat has a name and a personality
-                </p>
+            <!-- Toy personality cards -->
+            <p class="toy-cards-label">
+              Each Jellycat has a name and a personality
+            </p>
 
-                <div class="toy-cards">
-                  <div class="toy-card">
-                    <img src="image/card-1.png" alt="Bashful Bunny" />
-                  </div>
+            <div class="toy-cards">
+              <div class="toy-card">
+                <img src="image/card-1.png" alt="Bashful Bunny" />
+              </div>
 
-                  <div class="toy-card">
-                    <img src="image/card-2.png" alt="Bartholomew bear" />
-                  </div>
+              <div class="toy-card">
+                <img src="image/card-2.png" alt="Bartholomew bear" />
+              </div>
 
-                  <div class="toy-card">
-                    <img src="image/card-3.png" alt="Amuseables Peanut" />
-                  </div>
-                </div>
+              <div class="toy-card">
+                <img src="image/card-3.png" alt="Amuseables Peanut" />
               </div>
             </div>
-          </section>
+          </div>
+        </div>
+      </section>
 
-          <!-- Step 6b: characteristic labels -->
-          <section
-            class="page page-chapter-6"
-            id="page-6b"
-            data-page-title="Why Jellycat Works"
-          >
+      <!-- Step 6b: characteristic labels -->
+      <section
+        class="page page-chapter-6"
+        id="page-6b"
+        data-page-title="Why Jellycat Works"
+      >
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p6.png&quot;)"
+        ></div>
+        <div class="page-content page-content--6b">
+          <div class="characteristic-labels">
+            <!-- Top-left of bunny -->
             <div
-              class="page-background"
-              style="background-image: url(&quot;image/p6.png&quot;)"
-            ></div>
-            <div class="page-content page-content--6b">
-              <div class="characteristic-labels">
-                <!-- Top-left of bunny -->
-                <div
-                  class="char-label char-label--softness"
-                  style="--label-delay: 1s"
-                >
-                  <img
-                    src="image/label-1.png"
-                    alt=""
-                    aria-hidden="true"
-                    class="label-bg"
-                  />
-                  <div class="label-text">
-                    <h4>Softness</h4>
-                    <p>Gentle textures create a calming tactile experience.</p>
-                  </div>
-                </div>
-
-                <!-- Middle-left of bunny -->
-                <div
-                  class="char-label char-label--familiarity"
-                  style="--label-delay: 1.5s"
-                >
-                  <img
-                    src="image/label-2.png"
-                    alt=""
-                    aria-hidden="true"
-                    class="label-bg"
-                  />
-                  <div class="label-text">
-                    <h4>Familiarity</h4>
-                    <p>Its simple shape feels safe and recognisable.</p>
-                  </div>
-                </div>
-
-                <!-- Bottom-left of bunny -->
-                <div
-                  class="char-label char-label--nostalgia"
-                  style="--label-delay: 2s"
-                >
-                  <img
-                    src="image/label-3.png"
-                    alt=""
-                    aria-hidden="true"
-                    class="label-bg"
-                  />
-                  <div class="label-text">
-                    <h4>Nostalgia</h4>
-                    <p>Reconnects us with childhood warmth and memories.</p>
-                  </div>
-                </div>
-
-                <!-- Right side of bunny -->
-                <div
-                  class="char-label char-label--security"
-                  style="--label-delay: 2.5s"
-                >
-                  <img
-                    src="image/label-4.png"
-                    alt=""
-                    aria-hidden="true"
-                    class="label-bg"
-                  />
-                  <div class="label-text">
-                    <h4>Security</h4>
-                    <p>
-                      Holding something soft can help reduce anxiety and bring a
-                      sense of peace.
-                    </p>
-                  </div>
-                </div>
+              class="char-label char-label--softness"
+              style="--label-delay: 1s"
+            >
+              <img
+                src="image/label-1.png"
+                alt=""
+                aria-hidden="true"
+                class="label-bg"
+              />
+              <div class="label-text">
+                <h4>Softness</h4>
+                <p>Gentle textures create a calming tactile experience.</p>
               </div>
-              <!-- end .characteristic-labels -->
             </div>
-          </section>
+
+            <!-- Middle-left of bunny -->
+            <div
+              class="char-label char-label--familiarity"
+              style="--label-delay: 1.5s"
+            >
+              <img
+                src="image/label-2.png"
+                alt=""
+                aria-hidden="true"
+                class="label-bg"
+              />
+              <div class="label-text">
+                <h4>Familiarity</h4>
+                <p>Its simple shape feels safe and recognisable.</p>
+              </div>
+            </div>
+
+            <!-- Bottom-left of bunny -->
+            <div
+              class="char-label char-label--nostalgia"
+              style="--label-delay: 2s"
+            >
+              <img
+                src="image/label-3.png"
+                alt=""
+                aria-hidden="true"
+                class="label-bg"
+              />
+              <div class="label-text">
+                <h4>Nostalgia</h4>
+                <p>Reconnects us with childhood warmth and memories.</p>
+              </div>
+            </div>
+
+            <!-- Right side of bunny -->
+            <div
+              class="char-label char-label--security"
+              style="--label-delay: 2.5s"
+            >
+              <img
+                src="image/label-4.png"
+                alt=""
+                aria-hidden="true"
+                class="label-bg"
+              />
+              <div class="label-text">
+                <h4>Security</h4>
+                <p>
+                  Holding something soft can help reduce anxiety and bring a
+                  sense of peace.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- end .characteristic-labels -->
+        </div>
+      </section>
 
       <!-- ============================================ -->
       <!-- Page 7: How it became Popular -->
@@ -454,10 +483,30 @@
         <!-- Base layers repeated so they stay visible -->
         <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
         <img class="p7-layer" src="image/bunny.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/bubble-1.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/bubble-2.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/bubble-3.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/insta-icons.png" alt="" aria-hidden="true" />
+        <img
+          class="p7-layer"
+          src="image/bubble-1.png"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p7-layer"
+          src="image/bubble-2.png"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p7-layer"
+          src="image/bubble-3.png"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p7-layer"
+          src="image/insta-icons.png"
+          alt=""
+          aria-hidden="true"
+        />
 
         <!-- Pink message box fades in on top -->
         <img

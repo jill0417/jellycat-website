@@ -26,6 +26,9 @@ body {
   font-family: "Georgia", serif;
   background: #1a1a1a;
 }
+.page-content p {
+  font-family: "Inter", sans-serif;
+}
 
 img {
   display: block;
@@ -297,28 +300,6 @@ img {
   margin-bottom: 14px;
 }
 
-.highlight {
-  color: var(--color-highlight);
-}
-
-.highlight-rose {
-  color: var(--color-highlight-rose);
-}
-
-/* In-page reveal steps (fade in without a page flip) */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-
-.reveal.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* ============================================
    PAGE 1 — COVER
    ============================================ */
@@ -362,9 +343,77 @@ img {
 }
 
 /* ============================================
-   PAGE 4 — EMOTIONAL NEEDS
+   PAGE 2 — Introduction
    ============================================ */
 
+#page-2 .page-content {
+  align-items: flex-start;
+  padding-left: 40px;
+  padding-right: 45%;
+}
+
+.highlight {
+  color: var(--color-highlight);
+}
+
+.highlight-rose {
+  color: var(--color-highlight-rose);
+}
+
+/* In-page reveal steps (fade in without a page flip) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   PAGE 3 — The World Today
+   ============================================ */
+#page-3 .page-content {
+  align-items: flex-end;
+  text-align: left;
+  padding-left: 45%;
+  padding-right: 60px;
+}
+
+#page-3 .page-content h2,
+#page-3 .page-content p {
+  color: #ffffff;
+}
+
+#page-3 .page-content p {
+  max-width: 460px;
+}
+
+/* ============================================
+   PAGE 4 — EMOTIONAL NEEDS
+   ============================================ */
+.p4-delayed {
+  opacity: 0;
+}
+
+.fade-step.is-active .p4-delayed {
+  animation: p4DelayedIn 0.8s ease 1s forwards;
+}
+
+@keyframes p4DelayedIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .text-list {
   list-style: none;
   display: flex;
@@ -374,14 +423,138 @@ img {
 }
 
 .text-list li {
-  font-size: clamp(1rem, 2vw, 1.4rem);
-  color: #3a2a1a;
+  font-size: clamp(2rem, 2vw, 1.4rem);
   line-height: 1.6;
+}
+
+/* Page 4 text — right side */
+.fade-step .page-content {
+  align-items: flex-end;
+  text-align: left;
+  padding-left: 45%;
+  padding-right: 60px;
+}
+
+.fade-step .page-content h2,
+.fade-step .page-content h3,
+.fade-step .page-content p,
+.fade-step .page-content .text-list li {
+  color: #ffffff;
+  font-family: "Georgia", serif;
+}
+
+.fade-step .page-content p {
+  max-width: 16em;
+  font-size: clamp(0.7rem, 2.2vw, 1.5rem);
+}
+.fade-step .page-content .text-list {
+  align-items: flex-end;
+}
+.fade-step .page-content h2 {
+  max-width: 10em; /* forces 3 lines */
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  line-height: 1.5;
+}
+
+#page-4-step-2 .page-content h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  max-width: 8em;
+}
+
+#page-4-step-5 .page-content .p4-line-1 {
+  max-width: 30em;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+#page-4-step-5 .page-content .p4-delayed {
+  max-width: 16.6em;
+}
+
+.fade-step.is-active .page-content h2,
+.fade-step.is-active .page-content p:not(.p4-delayed),
+.fade-step.is-active .page-content .text-list {
+  animation: p4TextIn 0.7s ease both;
+}
+
+@keyframes p4TextIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============================================
    PAGE 5 — WHAT IS JELLYCAT
    ============================================ */
+/* Handwritten font + dark, readable text for the whole page */
+#page-5 .page-content,
+#page-5b .page-content {
+  color: #4a3b2a;
+}
+
+/* Step 1 — key message on the right */
+#page-5 .page-content {
+  align-items: flex-end;
+  text-align: right;
+  padding-left: 45%;
+  padding-right: 60px;
+}
+
+#page-5 .page-content p {
+  color: #4a3b2a;
+  font-family: "Georgia", serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1.25;
+  max-width: 11em;
+}
+
+/* Step 2 — centered, lifted slightly above middle */
+#page-5b .page-content {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 12px;
+  transform: translateY(-5%);
+}
+
+/* Text panel built from an <img> so it keeps its aspect ratio */
+#page-5b .desc-wrap {
+  position: relative;
+  width: 900px; /* ← make the PICTURE bigger/smaller here */
+  max-width: 92vw;
+  margin-bottom: 40px;
+}
+
+#page-5b .desc-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#page-5b .jellycat-desc {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 14%; /* keeps the words off the panel edges */
+  color: #4a3b2a;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.35;
+}
+
+/* Warm accent words: 1999, soft textures, playful and unusual designs */
+.accent {
+  color: #cf8a45;
+  font-weight: 700;
+}
 
 .page-content--5b {
   justify-content: center;
@@ -417,10 +590,29 @@ img {
 }
 
 .toy-item img {
-  width: 160px;
-  height: 160px;
+  width: 210px;
+  height: 210px;
   object-fit: contain;
   border-radius: 12px;
+}
+
+/* Page 5 toys — large, filling the whole row */
+#page-5b .toy-grid {
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 0.8vw;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#page-5b .toy-item {
+  flex: 1 1 0;
+}
+
+#page-5b .toy-item img {
+  width: 100%;
+  height: 32vh;
+  object-fit: contain;
 }
 
 /* ============================================
