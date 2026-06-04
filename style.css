@@ -535,19 +535,23 @@ img {
   height: auto;
 }
 
-#page-5b .jellycat-desc {
+/* Wrapper centers the paragraph over the panel; the <p> stays a normal block */
+#page-5b .desc-text {
   position: absolute;
   inset: 0;
-  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 12%; /* keeps the words off the panel edges */
+}
+
+#page-5b .jellycat-desc {
+  margin: 0;
   text-align: center;
-  padding: 0 14%; /* keeps the words off the panel edges */
   color: #4a3b2a;
   font-family: "Caveat", cursive;
   font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 /* Warm accent words: 1999, soft textures, playful and unusual designs */
