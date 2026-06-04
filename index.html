@@ -308,12 +308,6 @@
               class="char-label char-label--softness"
               style="--label-delay: 0s"
             >
-              <img
-                src="image/label-1.png"
-                alt=""
-                aria-hidden="true"
-                class="label-bg"
-              />
               <div class="label-text">
                 <h4>Softness</h4>
                 <p>Gentle textures create a calming tactile experience.</p>
@@ -324,12 +318,6 @@
               class="char-label char-label--familiarity"
               style="--label-delay: 0.4s"
             >
-              <img
-                src="image/label-2.png"
-                alt=""
-                aria-hidden="true"
-                class="label-bg"
-              />
               <div class="label-text">
                 <h4>Familiarity</h4>
                 <p>Its simple shape feels safe and recognisable.</p>
@@ -340,12 +328,6 @@
               class="char-label char-label--nostalgia"
               style="--label-delay: 0.8s"
             >
-              <img
-                src="image/label-3.png"
-                alt=""
-                aria-hidden="true"
-                class="label-bg"
-              />
               <div class="label-text">
                 <h4>Nostalgia</h4>
                 <p>Reconnects us with childhood warmth and memories.</p>
@@ -356,12 +338,6 @@
               class="char-label char-label--security"
               style="--label-delay: 1.2s"
             >
-              <img
-                src="image/label-4.png"
-                alt=""
-                aria-hidden="true"
-                class="label-bg"
-              />
               <div class="label-text">
                 <h4>Security</h4>
                 <p>
@@ -378,121 +354,65 @@
       <!-- Page 7: How it became Popular -->
       <!-- ============================================ -->
 
-      <!-- Step 7a: background & bunny & text -->
       <section class="page" id="page-7" data-page-title="How It Became Popular">
-        <!-- Layer 1: background  -->
+        <!-- Base layers (always visible; bunny animates on entry) -->
         <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
-
-        <!-- Layer 2: bunny illustration-->
         <img
           class="p7-layer p7-bunny"
           src="image/bunny.png"
           alt="Jellycat bunny illustration"
         />
 
-        <!-- Layer 3: title & body text  -->
-        <h2 class="p7-title">How It Became Popular</h2>
-        <p>
-          Social media transformed Jellycat from a children’s toy into a global
-          cultural phenomenon. Fans share collections, stories, and creative
-          scenes online, turning Jellycat into a symbol of identity,
-          companionship, and emotional expression. Interactive in-store
-          experiences further strengthen emotional connection by including
-          engaging and performing elements.
-        </p>
-      </section>
+        <!-- Step 1 (on entry): title & body text on the left -->
+        <div class="reveal p7-text-block" data-step="1">
+          <h2 class="p7-title">How It Became Popular</h2>
+          <p>
+            Social media transformed Jellycat from a children’s toy into a
+            global cultural phenomenon. Fans share collections, stories, and
+            creative scenes online, turning Jellycat into a symbol of identity,
+            companionship, and emotional expression. Interactive in-store
+            experiences further strengthen emotional connection by including
+            engaging and performing elements.
+          </p>
+        </div>
 
-      <!-- Step 7b: bubble scenes -->
-      <section
-        class="page page-chapter-7"
-        id="page-7b"
-        data-page-title="How It Became Popular"
-      >
-        <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/bunny.png" alt="" aria-hidden="true" />
-        <h2 class="p7-title">How It Became Popular</h2>
-        <p>
-          Social media transformed Jellycat from a children’s toy into a global
-          cultural phenomenon. Fans share collections, stories, and creative
-          scenes online, turning Jellycat into a symbol of identity,
-          companionship, and emotional expression. Interactive in-store
-          experiences further strengthen emotional connection by including
-          engaging and performing elements.
-        </p>
+        <!-- Step 2 (scroll): bubble scenes appear one by one, icons after -->
+        <div class="reveal p7-scenes" data-step="2">
+          <img
+            class="p7-layer p7-bubble p7-bubble--1"
+            src="image/bubble-1.png"
+            alt="In-store experience: a playful purchase that becomes a special memory."
+            style="--bubble-delay: 0.3s"
+          />
+          <img
+            class="p7-layer p7-bubble p7-bubble--2"
+            src="image/bubble-2.png"
+            alt="Collect them. Love them. Each Jellycat becomes part of their collection."
+            style="--bubble-delay: 1.3s"
+          />
+          <img
+            class="p7-layer p7-bubble p7-bubble--3"
+            src="image/bubble-3.png"
+            alt="Share and connect online: they post and express what Jellycat means to them."
+            style="--bubble-delay: 2.3s"
+          />
+          <!-- Instagram comment + link icons appear after the bubbles -->
+          <img
+            class="p7-layer p7-icons"
+            src="image/insta-icons.png"
+            alt="Instagram like and comment icons"
+            style="--bubble-delay: 3.3s"
+          />
+        </div>
 
-        <!-- Bubble 1: top centre — in-store experience scene -->
-        <img
-          class="p7-layer p7-bubble p7-bubble--1"
-          src="image/bubble-1.png"
-          alt="In-store experience: A playful and engaging purchase that becomes a special memory."
-          style="--bubble-delay: 0.3s"
-        />
-
-        <!-- Bubble 2: top right — collect them scene -->
-        <img
-          class="p7-layer p7-bubble p7-bubble--2"
-          src="image/bubble-2.png"
-          alt="Collect them. Love them. Each Jellycat becomes part of their everyday and their collection."
-          style="--bubble-delay: 0.9s"
-        />
-
-        <!-- Bubble 3: bottom right — share and connect online scene -->
-        <img
-          class="p7-layer p7-bubble p7-bubble--3"
-          src="image/bubble-3.png"
-          alt="Share and connect online: They post, share, and express what Jellycat means to them."
-          style="--bubble-delay: 1.5s"
-        />
-
-        <!-- Social icons (likes, comments) float upward -->
-        <img
-          class="p7-layer p7-icons"
-          src="image/insta-icons.png"
-          alt="Instagram like and comment icons"
-          style="--bubble-delay: 2.1s"
-        />
-      </section>
-
-      <!-- Step 7c: pink quote box fades in at bottom left -->
-      <section
-        class="page page-chapter-7"
-        id="page-7c"
-        data-page-title="How It Became Popular"
-      >
-        <!-- Base layers repeated so they stay visible -->
-        <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
-        <img class="p7-layer" src="image/bunny.png" alt="" aria-hidden="true" />
-        <img
-          class="p7-layer"
-          src="image/bubble-1.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="image/bubble-2.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="image/bubble-3.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="image/insta-icons.png"
-          alt=""
-          aria-hidden="true"
-        />
-
-        <!-- Pink message box fades in on top -->
-        <img
-          class="p7-layer p7-pink-box"
-          src="image/message-pink.png"
-          alt="This immersive and creative shopping experience makes Jellycat even more irresistible and captures customers' hearts."
-        />
+        <!-- Step 3 (scroll): pink quote box -->
+        <div class="reveal p7-pink-wrap" data-step="3">
+          <img
+            class="p7-layer p7-pink-box"
+            src="image/message-pink.png"
+            alt="This immersive and creative shopping experience makes Jellycat even more irresistible and captures customers' hearts."
+          />
+        </div>
       </section>
 
       <!-- ============================================ -->

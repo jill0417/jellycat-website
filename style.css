@@ -675,15 +675,19 @@ img {
 /* Toy personality cards */
 .toy-cards-label {
   font-size: 0.8rem;
+  font-family: "Georgia", serif;
   letter-spacing: 0.08em;
   color: #7a5a3a;
   margin: 28px auto 16px; /* auto centres the pill */
   text-align: center;
   font-style: italic;
   width: fit-content;
-  background: rgba(255, 244, 230, 0.92);
-  padding: 8px 20px;
-  border-radius: 20px;
+  /* soft, see-through wash so it blends with the illustrations instead of
+     reading as a solid pill */
+  background: rgba(255, 249, 240, 0.45);
+  backdrop-filter: blur(3px);
+  padding: 6px 16px;
+  border-radius: 14px;
 }
 
 .toy-cards {
@@ -702,45 +706,11 @@ img {
   width: 100%;
   height: 30vh; /* ← card size: bigger number = bigger cards */
   object-fit: cover; /* zoom into the polaroid, crop the empty frame */
-  object-position: 42% center; /* ← focus on the card (it sits left-of-centre) */
+  object-position: 35% center; /* ← lower % shows more of the card's LEFT side */
   border-radius: 8px;
 }
 
-.toy-card h3 {
-  font-size: 0.9rem;
-  color: #2e1e0e;
-  font-weight: normal;
-}
-
-.toy-card p {
-  font-size: 0.75rem;
-  color: #5a4030;
-  margin: 0;
-  line-height: 1.5;
-  max-width: none;
-}
-
-.toy-card-quote {
-  font-style: italic;
-  background: rgba(200, 160, 120, 0.15);
-  border-radius: 6px;
-  padding: 6px 8px;
-  margin-top: 4px;
-}
-
-.p6-footer-note {
-  text-align: center;
-  font-size: 0.78rem;
-  color: #7a5a3a;
-  font-style: italic;
-  margin-top: 16px;
-}
-
-/* Step 6b — characteristic labels */
-.page-content--6b {
-  padding: 0;
-}
-
+/* Characteristic labels */
 .characteristic-labels {
   position: absolute;
   inset: 0;
@@ -750,8 +720,6 @@ img {
 .char-label {
   position: absolute;
   width: 190px;
-  /* Clean pink pill (the blob image is hidden — see .label-bg) */
-  background: rgba(244, 205, 200, 0.92);
   border-radius: 22px;
   padding: 14px 18px;
   box-shadow: 0 4px 14px rgba(150, 90, 80, 0.12);
@@ -779,23 +747,22 @@ img {
 .char-label--softness {
   top: 10%;
   left: 6%;
+  background: rgba(244, 205, 200, 0.92); /* pink */
 }
 .char-label--familiarity {
   top: 38%;
   left: 2%;
+  background: rgba(198, 222, 235, 0.92); /* blue */
 }
 .char-label--nostalgia {
-  bottom: 14%;
-  left: 6%;
+  bottom: 16%;
+  left: 32%; /* bottom-right of the bunny */
+  background: rgba(206, 226, 199, 0.92); /* green */
 }
 .char-label--security {
   top: 28%;
-  left: 30%;
-}
-
-/* Blob image hidden — labels now use the CSS pill above */
-.label-bg {
-  display: none;
+  left: 36%; /* moved right so it clears the bunny */
+  background: rgba(247, 226, 190, 0.92); /* warm yellow */
 }
 
 .label-text {
@@ -831,6 +798,33 @@ img {
   object-fit: contain;
 }
 
+/* Step 1 — title & body on the left */
+#page-7 .p7-text-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32%; /* ← narrower so it clears the bunny; lower = narrower */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* top-aligned instead of centred */
+  padding: 120px 24px 80px 56px; /* ← top number controls how high the text sits */
+  z-index: 4;
+}
+
+.p7-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: #2e1e0e;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+#page-7 .p7-text-block p {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #3a2a1a;
+  line-height: 1.8;
+}
+
 /* Bunny scales up slightly on entry */
 .p7-bunny {
   opacity: 0;
@@ -845,32 +839,30 @@ img {
   transform: scale(1);
 }
 
-/* Text layer fades in after bunny */
-.p7-text {
-  opacity: 0;
-  transition: opacity 0.8s ease 0.8s;
-}
-
-.page.is-active .p7-text {
-  opacity: 1;
-}
-
 /* Bubble scenes — staggered fade + slight rise */
 .p7-bubble {
   opacity: 0;
   transform: translateY(12px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity 1s ease,
+    transform 1s ease;
   transition-delay: var(--bubble-delay, 0s);
 }
 
-.page.is-active .p7-bubble {
+/* Step 2 container — covers the page; only the bubbles inside fade in */
+#page-7 .p7-scenes {
+  position: absolute;
+  inset: 0;
+  opacity: 1; /* override .reveal so the wrapper itself doesn't fade */
+  transform: none;
+}
+
+#page-7 .p7-scenes.is-revealed .p7-bubble {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Social icons float upward */
+/* Social icons float upward — appear after the bubbles (larger --bubble-delay) */
 .p7-icons {
   opacity: 0;
   transform: translateY(20px);
@@ -880,19 +872,15 @@ img {
   transition-delay: var(--bubble-delay, 0s);
 }
 
-.page.is-active .p7-icons {
+#page-7 .p7-scenes.is-revealed .p7-icons {
   opacity: 1;
   transform: translateY(-12px);
 }
 
-/* Pink message box */
-.p7-pink-box {
-  opacity: 0;
-  transition: opacity 1s ease 0.3s;
-}
-
-.page.is-active .p7-pink-box {
-  opacity: 1;
+/* Step 3 — pink message box wrapper fades in on reveal */
+#page-7 .p7-pink-wrap {
+  position: absolute;
+  inset: 0;
 }
 
 /* ============================================

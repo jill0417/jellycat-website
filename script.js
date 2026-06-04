@@ -232,11 +232,12 @@ function triggerPageAnimations(section, direction, revealAll) {
   const reveals = getReveals(section);
 
   if (reveals.length) {
-    if (revealAll || direction === "backward") {
-      /* Entering from the next page (or via menu) → show everything */
+    if (revealAll) {
+      /* Jumped here via the menu → show everything */
       reveals.forEach((el) => el.classList.add("is-revealed"));
     } else {
-      /* Entering forward → show only step 1, rest cascade on scroll */
+      /* Entering by scroll (either direction) → show only step 1;
+         the rest cascade in gradually as the user keeps scrolling */
       reveals.forEach((el, i) => el.classList.toggle("is-revealed", i === 0));
     }
   }
