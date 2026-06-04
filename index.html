@@ -221,20 +221,12 @@
         ></div>
         <div class="page-content page-content--5b">
           <div class="desc-wrap">
-            <img
-              class="desc-bg"
-              src="image/p5-text-background.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <div class="desc-text">
-              <p class="jellycat-desc">
-                Unlike traditional plush toys, Jellycat combines
-                <span class="accent">soft textures</span> with
-                <span class="accent">playful and unusual designs</span>,
-                ranging from animals to food and everyday objects.
-              </p>
-            </div>
+            <p class="jellycat-desc">
+              Unlike traditional plush toys, Jellycat combines
+              <span class="accent">soft textures</span> with
+              <span class="accent">playful and unusual designs</span>, ranging
+              from animals to food and everyday objects.
+            </p>
           </div>
 
           <!-- Toy images -->
@@ -266,66 +258,55 @@
         ></div>
 
         <div class="page-content page-content--6a">
-          <!-- Right column: body text & toy cards -->
+          <!-- Right column: text + personality cards -->
           <div class="p6-right">
-            <h2 class="p6-title">Why Jellycat Works</h2>
+            <!-- Step 1 (on entry): title, then body 1s later -->
+            <div class="reveal p6-intro" data-step="1">
+              <h2 class="p6-title">Why Jellycat Works</h2>
 
-            <p>
-              Plush toys can act as
-              <span class="highlight">emotional support</span>, offering
-              psychological comfort and a
-              <span class="highlight">sense of security</span>.
-            </p>
-            <p>
-              Their softness, familiarity, and nostalgic qualities help reduce
-              anxiety, also stimulate childhood memories and reconnect the
-              feeling of warmth and tranquillity.
-            </p>
-            <p>
-              By giving each toy a name, personality, and rich expressions, as
-              if it had been given a human nature, this enhances the sense of
-              connection through
-              <span class="highlight">anthropomorphic design</span>.
-            </p>
+              <p>
+                Plush toys can act as
+                <span class="highlight">emotional support</span>, offering
+                psychological comfort and a
+                <span class="highlight">sense of security</span>.
+              </p>
+              <p>
+                Their softness, familiarity, and nostalgic qualities help reduce
+                anxiety, also stimulate childhood memories and reconnect the
+                feeling of warmth and tranquillity.
+              </p>
+              <p>
+                By giving each toy a name, personality, and rich expressions, as
+                if it had been given a human nature, this enhances the sense of
+                connection through
+                <span class="highlight">anthropomorphic design</span>.
+              </p>
+            </div>
 
-            <!-- Toy personality cards -->
-            <p class="toy-cards-label">
-              Each Jellycat has a name and a personality
-            </p>
-
-            <div class="toy-cards">
-              <div class="toy-card">
-                <img src="image/card-1.png" alt="Bashful Bunny" />
-              </div>
-
-              <div class="toy-card">
-                <img src="image/card-2.png" alt="Bartholomew bear" />
-              </div>
-
-              <div class="toy-card">
-                <img src="image/card-3.png" alt="Amuseables Peanut" />
+            <!-- Step 2 (scroll): personality cards -->
+            <div class="reveal toy-cards-block" data-step="2">
+              <p class="toy-cards-label">
+                Each Jellycat has a name and a personality
+              </p>
+              <div class="toy-cards">
+                <div class="toy-card">
+                  <img src="image/card-1.png" alt="Bashful Bunny" />
+                </div>
+                <div class="toy-card">
+                  <img src="image/card-2.png" alt="Bartholomew bear" />
+                </div>
+                <div class="toy-card">
+                  <img src="image/card-3.png" alt="Amuseables Peanut" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Step 6b: characteristic labels -->
-      <section
-        class="page page-chapter-6"
-        id="page-6b"
-        data-page-title="Why Jellycat Works"
-      >
-        <div
-          class="page-background"
-          style="background-image: url(&quot;image/p6.png&quot;)"
-        ></div>
-        <div class="page-content page-content--6b">
-          <div class="characteristic-labels">
-            <!-- Top-left of bunny -->
+          <!-- Step 3 (scroll): characteristic labels appear one by one round the bunny -->
+          <div class="reveal characteristic-labels" data-step="3">
             <div
               class="char-label char-label--softness"
-              style="--label-delay: 1s"
+              style="--label-delay: 0s"
             >
               <img
                 src="image/label-1.png"
@@ -339,10 +320,9 @@
               </div>
             </div>
 
-            <!-- Middle-left of bunny -->
             <div
               class="char-label char-label--familiarity"
-              style="--label-delay: 1.5s"
+              style="--label-delay: 0.4s"
             >
               <img
                 src="image/label-2.png"
@@ -356,10 +336,9 @@
               </div>
             </div>
 
-            <!-- Bottom-left of bunny -->
             <div
               class="char-label char-label--nostalgia"
-              style="--label-delay: 2s"
+              style="--label-delay: 0.8s"
             >
               <img
                 src="image/label-3.png"
@@ -373,10 +352,9 @@
               </div>
             </div>
 
-            <!-- Right side of bunny -->
             <div
               class="char-label char-label--security"
-              style="--label-delay: 2.5s"
+              style="--label-delay: 1.2s"
             >
               <img
                 src="image/label-4.png"
@@ -393,7 +371,6 @@
               </div>
             </div>
           </div>
-          <!-- end .characteristic-labels -->
         </div>
       </section>
 
