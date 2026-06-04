@@ -1,259 +1,400 @@
-/* ══════════════════════════════════════════════════
-   COMFORT THEORY — Script
-   8 chapters · GSAP page-flip · menu drawer · interactivity
-══════════════════════════════════════════════════ */
+/* ============================================
+   PAGE DATA
+   Defines every section in scroll order.
+   pageNumber: which of the 9 chapters it belongs to (for progress bar).
+   chapterId:  the id of the first section of that chapter (for nav links).
+   ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+const pages = Array.from(document.querySelectorAll(".page"));
 
-  /* ─── Chapters ───────────────────────────────── */
-  // Chapters are in REVERSE DOM order — reversing gives cover = index 0
-  const chapters = Array.from(document.querySelectorAll('.chapter')).reverse();
-  const total    = chapters.length;   // 8
+const pageChapterMap = {
+  "page-1": 1,
+  "page-2": 2,
+  "page-3": 3,
+  "page-4": 4,
+  "page-5": 5,
+  "page-5b": 5,
+  "page-6": 6,
+  "page-6b": 6,
+  "page-7": 7,
+  "page-7b": 7,
+  "page-7c": 7,
+  "page-8": 8,
+  "page-8b": 8,
+  "page-9": 9,
+};
 
-  let current    = 0;
-  let isAnimating = false;
+/* Returns a page's .reveal steps, sorted by data-step */
+function getReveals(pageEl) {
+  return Array.from(pageEl.querySelectorAll(".reveal")).sort(
+    (a, b) => +a.dataset.step - +b.dataset.step,
+  );
+}
 
-  const chapterLabels = [
-    'Cover',
-    'Introduction',
-    'The World Today',
-    'Emotional Needs',
-    'What is Jellycat',
-    'Why Jellycat Works',
-    'How It Became Popular',
-    'The Deeper Meaning',
-    'Reflection',
-  ];
+/* ============================================
+   STATE
+   ============================================ */
 
-  /* ─── UI Elements ────────────────────────────── */
-  const progressFill = document.getElementById('progress-fill');
-  const pageCurrent  = document.getElementById('page-current');
-  const pageTotal    = document.getElementById('page-total');
-  const biTitle      = document.getElementById('bi-title');
-  const uiPageTitle  = document.getElementById('ui-page-title');
+let currentIndex = 0;
+let isAnimating = false;
+const TOTAL_CHAPTERS = 9;
 
-  const menuBtn      = document.getElementById('menu-btn');
-  const menuDrawer   = document.getElementById('menu-drawer');
-  const menuBackdrop = document.getElementById('menu-backdrop');
-  const menuClose    = document.getElementById('menu-close');
-  const menuNav      = document.getElementById('menu-nav');
+/* ============================================
+   INIT
+   ============================================ */
 
-  pageTotal.textContent = total;
+function init() {
+  showPage(0, null);
+  updateNav(0);
+  setupHamburger();
+  setupNavLinks();
+  setupScrollListener();
+  setupKeyListener();
+}
 
-  /* ─── Build Menu Items ───────────────────────── */
-  chapters.forEach((ch, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'menu-item' + (i === 0 ? ' active' : '');
-    btn.innerHTML = `
-      <span class="menu-item-num">${i === 0 ? '✦' : String(i).padStart(2, '0')}</span>
-      <span class="menu-item-title">${chapterLabels[i] || `Chapter ${i}`}</span>
-      <span class="menu-item-dot"></span>
-    `;
-    btn.setAttribute('aria-label', `Go to: ${chapterLabels[i]}`);
-    btn.addEventListener('click', () => { goTo(i); closeMenu(); });
-    menuNav.appendChild(btn);
+/* ============================================
+   SHOW PAGE
+   direction: 'forward' | 'backward' | null (no animation on first load)
+   ============================================ */
+
+function showPage(newIndex, direction, revealAll = false) {
+  const oldPage = pages[currentIndex];
+  const newPage = pages[newIndex];
+
+  /* — Reset all pages — */
+  pages.forEach((p) => {
+    p.classList.remove(
+      "is-current",
+      "is-next",
+      "flip-out-forward",
+      "flip-out-backward",
+      "is-active",
+    );
+    p.style.opacity = "0";
+    p.style.zIndex = "0";
+    p.style.pointerEvents = "none";
   });
-  const menuItems = menuNav.querySelectorAll('.menu-item');
 
-  /* ─── Menu ───────────────────────────────────── */
-  function openMenu() {
-    menuDrawer.classList.add('open');
-    menuBackdrop.classList.add('open');
-    menuDrawer.setAttribute('aria-hidden', 'false');
-  }
-  function closeMenu() {
-    menuDrawer.classList.remove('open');
-    menuBackdrop.classList.remove('open');
-    menuDrawer.setAttribute('aria-hidden', 'true');
+  if (direction === null) {
+    /* First load — no animation */
+    newPage.classList.add("is-current", "is-active");
+    newPage.style.opacity = "1";
+    newPage.style.zIndex = "10";
+    newPage.style.pointerEvents = "auto";
+    currentIndex = newIndex;
+    triggerPageAnimations(newPage, direction, revealAll);
+    return;
   }
 
-  menuBtn.addEventListener('click', openMenu);
-  menuClose.addEventListener('click', closeMenu);
-  menuBackdrop.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && menuDrawer.classList.contains('open')) closeMenu();
-  });
+  /* Pre-show the incoming page underneath */
+  newPage.classList.add("is-next");
+  newPage.style.opacity = "1";
+  newPage.style.zIndex = "9";
 
-  /* ─── Update UI ──────────────────────────────── */
-  function updateUI() {
-    const pct = total > 1 ? (current / (total - 1)) * 100 : 0;
-    progressFill.style.width = pct + '%';
-    pageCurrent.textContent  = current + 1;
-    biTitle.textContent      = chapterLabels[current] || '';
-    if (uiPageTitle) uiPageTitle.textContent = chapterLabels[current] || '';
-    menuItems.forEach((m, i) => m.classList.toggle('active', i === current));
-  }
+  /* Animate the outgoing page flipping away */
+  const animClass =
+    direction === "forward" ? "flip-out-forward" : "flip-out-backward";
+  oldPage.classList.add(animClass);
+  oldPage.style.opacity = "1";
+  oldPage.style.zIndex = "11";
 
-  /* ─── Activate Chapter ───────────────────────── */
-  function activateChapter(index) {
-    chapters.forEach(ch => ch.classList.remove('active'));
-    chapters[index].classList.add('active');
+  isAnimating = true;
 
-    // Animate any stat counters on this chapter
-    chapters[index].querySelectorAll('[data-target]').forEach(animateCounter);
+  const FLIP_DURATION = 800; /* match --flip-duration in CSS */
 
-    // Notification rain is removed (it was distracting over the dark image)
-    if (false && chapters[index].classList.contains('chapter--emotional')) {
-      startNotifRain();
+  setTimeout(() => {
+    /* Clean up old page */
+    oldPage.classList.remove(animClass);
+    oldPage.style.opacity = "0";
+    oldPage.style.zIndex = "0";
+
+    /* Settle new page as current */
+    newPage.classList.remove("is-next");
+    newPage.classList.add("is-current", "is-active");
+    newPage.style.zIndex = "10";
+    newPage.style.pointerEvents = "auto";
+
+    currentIndex = newIndex;
+    isAnimating = false;
+
+    updateNav(newIndex);
+    triggerPageAnimations(newPage, direction, revealAll);
+  }, FLIP_DURATION);
+}
+
+/* ============================================
+   NAVIGATION UPDATES
+   ============================================ */
+
+function updateNav(index) {
+  const section = pages[index];
+  const title = section.dataset.pageTitle || "";
+  const sectionId = section.id || "";
+  const chapterNumber =
+    pageChapterMap[sectionId] || getChapterFromClasses(section);
+
+  document.getElementById("page-title").textContent = title;
+
+  /* Progress bar */
+  const progress = (chapterNumber / TOTAL_CHAPTERS) * 100;
+  document
+    .getElementById("progress-bar")
+    .style.setProperty("--progress", progress + "%");
+  document.getElementById("progress-label").textContent =
+    chapterNumber + " / " + TOTAL_CHAPTERS;
+}
+
+function getChapterFromClasses(section) {
+  /* Fallback: read chapter from class like .page-chapter-4 */
+  const match = Array.from(section.classList)
+    .join(" ")
+    .match(/page-chapter-(\d+)/);
+  return match ? parseInt(match[1], 10) : 1;
+}
+
+/* ============================================
+   PAGE-SPECIFIC ANIMATIONS
+   ============================================ */
+
+function triggerPageAnimations(section, direction, revealAll) {
+  const reveals = getReveals(section);
+
+  if (reveals.length) {
+    if (revealAll || direction === "backward") {
+      /* Entering from the next page (or via menu) → show everything */
+      reveals.forEach((el) => el.classList.add("is-revealed"));
     } else {
-      stopNotifRain();
+      /* Entering forward → show only step 1, rest cascade on scroll */
+      reveals.forEach((el, i) => el.classList.toggle("is-revealed", i === 0));
     }
   }
 
-  /* ─── GSAP Page Flip ─────────────────────────── */
-  function goTo(targetIndex) {
-    if (isAnimating || targetIndex === current) return;
-    if (targetIndex < 0 || targetIndex >= total) return;
+  if (section.id === "page-9") {
+    startReflectionWriting();
+  }
+}
 
-    isAnimating = true;
-    const forward = targetIndex > current;
+/* ============================================
+   NAVIGATION DECIDERS
+   Decide whether a scroll reveals an in-page step or flips the page.
+   ============================================ */
 
-    if (forward) {
-      const ch = chapters[current];
-      ch.classList.add('flipping');
-      gsap.to(ch, {
-        rotationY: -180,
-        duration: 0.85,
-        ease: 'power2.inOut',
-        transformOrigin: 'left center',
-        onComplete: () => {
-          ch.classList.remove('flipping');
-          current = targetIndex;
-          updateUI();
-          activateChapter(current);
-          isAnimating = false;
-        }
-      });
-    } else {
-      const ch = chapters[targetIndex];
-      ch.classList.add('flipping');
-      gsap.to(ch, {
-        rotationY: 0,
-        duration: 0.85,
-        ease: 'power2.inOut',
-        transformOrigin: 'left center',
-        onComplete: () => {
-          ch.classList.remove('flipping');
-          current = targetIndex;
-          updateUI();
-          activateChapter(current);
-          isAnimating = false;
-        }
-      });
-    }
+/* Forward: reveal the next hidden step, OR flip to the next page */
+function goForward() {
+  if (isAnimating) return;
+
+  const page = pages[currentIndex];
+  const nextHidden = getReveals(page).find(
+    (el) => !el.classList.contains("is-revealed"),
+  );
+
+  if (nextHidden) {
+    nextHidden.classList.add("is-revealed"); /* fade in — NO flip */
+    return;
   }
 
-  /* ─── Wheel ──────────────────────────────────── */
-  let wheelAccum = 0;
-  window.addEventListener('wheel', e => {
+  if (currentIndex < pages.length - 1) {
+    showPage(currentIndex + 1, "forward");
+  }
+}
+
+/* Backward: hide the last revealed step, OR flip to the previous page */
+function goBackward() {
+  if (isAnimating) return;
+
+  const page = pages[currentIndex];
+  const revealed = getReveals(page).filter((el) =>
+    el.classList.contains("is-revealed"),
+  );
+
+  if (revealed.length > 1) {
+    revealed[revealed.length - 1].classList.remove("is-revealed"); /* NO flip */
+    return;
+  }
+
+  if (currentIndex > 0) {
+    showPage(currentIndex - 1, "backward");
+  }
+}
+
+/* ============================================
+   SCROLL HANDLER
+   ============================================ */
+
+function setupScrollListener() {
+  let inGesture = false; /* are we inside one continuous scroll right now? */
+  let endTimer = null; /* fires once the wheel has paused */
+
+  /* — Mouse wheel / trackpad — */
+  function handleWheel(e) {
     e.preventDefault();
-    if (isAnimating || menuDrawer.classList.contains('open')) return;
-    wheelAccum += e.deltaY;
-    if (wheelAccum >  60) { goTo(current + 1); wheelAccum = 0; }
-    if (wheelAccum < -60) { goTo(current - 1); wheelAccum = 0; }
-  }, { passive: false });
 
-  /* ─── Keyboard ───────────────────────────────── */
-  document.addEventListener('keydown', e => {
-    if (menuDrawer.classList.contains('open')) return;
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ')
-      { e.preventDefault(); goTo(current + 1); }
-    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')
-      { e.preventDefault(); goTo(current - 1); }
+    /* Ignore only the tiniest scroll noise */
+    if (Math.abs(e.deltaY) < 4) return;
+
+    /* A "new gesture" = the first event after a quiet pause.
+       Momentum events are continuations, not new gestures. */
+    const isNewGesture = !inGesture;
+    inGesture = true;
+
+    /* Each event pushes this back. Once events stop for 120ms,
+       the next one will count as a brand-new gesture. */
+    clearTimeout(endTimer);
+    endTimer = setTimeout(() => {
+      inGesture = false;
+    }, 120);
+
+    if (!isNewGesture) return; /* swallow the momentum tail → no double flip */
+    if (isAnimating) return; /* don't interrupt a flip already running */
+
+    if (e.deltaY > 0) {
+      goForward();
+    } else if (e.deltaY < 0) {
+      goBackward();
+    }
+  }
+
+  window.addEventListener("wheel", handleWheel, { passive: false });
+
+  /* — Touch swipe — */
+  let touchStartY = 0;
+
+  window.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "touchend",
+    (e) => {
+      if (isAnimating) return;
+      const delta = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(delta) < 40) return;
+
+      if (delta > 0) {
+        goForward();
+      } else if (delta < 0) {
+        goBackward();
+      }
+    },
+    { passive: true },
+  );
+}
+
+/* ============================================
+   KEYBOARD NAVIGATION
+   ============================================ */
+
+function setupKeyListener() {
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") goForward();
+    if (e.key === "ArrowUp" || e.key === "ArrowLeft") goBackward();
   });
+}
 
-  /* ─── Touch ──────────────────────────────────── */
-  let touchY = 0;
-  window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-  window.addEventListener('touchend', e => {
-    if (menuDrawer.classList.contains('open')) return;
-    const d = touchY - e.changedTouches[0].clientY;
-    if (Math.abs(d) < 40) return;
-    d > 0 ? goTo(current + 1) : goTo(current - 1);
-  }, { passive: true });
+/* ============================================
+   HAMBURGER MENU
+   ============================================ */
 
-  /* ─── Counter ────────────────────────────────── */
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.target, 10);
-    const t0 = performance.now();
-    (function step(now) {
-      const p = Math.min((now - t0) / 1200, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    })(t0);
-  }
+function setupHamburger() {
+  const hamburger = document.getElementById("hamburger");
+  const menu = document.getElementById("nav-menu");
 
-  /* ─── Notification Rain (emotional chapter) ──── */
-  const notifMessages = [
-    '🔔 You have 47 new emails',
-    '📱 3 people liked your photo',
-    '⚡ Breaking News: …',
-    '💬 New message from Sarah',
-    '📊 Report is ready to review',
-    '🛍️ Flash sale ends in 2 hours!',
-    '🔴 Live now — Watch this',
-    '📅 Meeting in 10 minutes',
-    '⭐ New follower request',
-    '🔔 96 notifications pending',
-    '📧 FWD: RE: RE: Please advise…',
-    '💡 Daily reminder: Breathe.',
-  ];
-  let rainInterval = null;
+  /* Create overlay element dynamically */
+  const overlay = document.createElement("div");
+  overlay.id = "nav-overlay";
+  document.body.appendChild(overlay);
 
-  function startNotifRain() {
-    const container = document.getElementById('notif-rain');
-    if (!container || rainInterval) return;
+  hamburger.addEventListener("click", () => toggleMenu(menu, overlay));
+  overlay.addEventListener("click", () => closeMenu(menu, overlay));
+}
 
-    function drop() {
-      const msg    = notifMessages[Math.floor(Math.random() * notifMessages.length)];
-      const bubble = document.createElement('div');
-      bubble.className = 'notif-bubble';
-      bubble.textContent = msg;
-      const x   = 5 + Math.random() * 55;
-      const dur = 5 + Math.random() * 5;
-      const del = Math.random() * 1.5;
-      bubble.style.left                = x + '%';
-      bubble.style.animationDuration   = dur + 's';
-      bubble.style.animationDelay      = del + 's';
-      container.appendChild(bubble);
-      setTimeout(() => bubble.remove(), (dur + del + 0.5) * 1000);
-    }
+function toggleMenu(menu, overlay) {
+  const isOpen = menu.classList.contains("is-open");
+  isOpen ? closeMenu(menu, overlay) : openMenu(menu, overlay);
+}
 
-    for (let i = 0; i < 5; i++) setTimeout(drop, i * 300);
-    rainInterval = setInterval(drop, 1200);
-  }
+function openMenu(menu, overlay) {
+  menu.classList.add("is-open");
+  overlay.classList.add("is-open");
+}
 
-  function stopNotifRain() {
-    if (!rainInterval) return;
-    clearInterval(rainInterval);
-    rainInterval = null;
-  }
+function closeMenu(menu, overlay) {
+  menu.classList.remove("is-open");
+  overlay.classList.remove("is-open");
+}
 
-  /* ─── Notification bubble CSS (injected) ────── */
-  const rainStyle = document.createElement('style');
-  rainStyle.textContent = `
-    .notif-rain { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
-    .notif-bubble {
-      position:absolute; top:-60px;
-      background:rgba(255,255,255,0.82); border:1px solid rgba(61,43,31,0.08);
-      border-radius:24px; padding:6px 14px;
-      font-family:'Nunito',sans-serif; font-size:12px; color:#3D2B1F;
-      white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.06);
-      animation: rainFall linear infinite; opacity:.75;
-    }
-    @keyframes rainFall {
-      0%   { transform:translateY(0);             opacity:0;    }
-      8%   {                                       opacity:.75;  }
-      92%  {                                       opacity:.75;  }
-      100% { transform:translateY(calc(100vh+80px)); opacity:0;  }
-    }
-  `;
-  document.head.appendChild(rainStyle);
+/* ============================================
+   NAV LINK CLICKS
+   ============================================ */
 
-  /* ─── Init ───────────────────────────────────── */
-  chapters.forEach(ch => gsap.set(ch, { rotationY: 0 }));
-  updateUI();
-  activateChapter(0);
+function setupNavLinks() {
+  const links = document.querySelectorAll("#nav-menu a");
+  const menu = document.getElementById("nav-menu");
 
-});
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href").replace("#", "");
+      const targetIndex = pages.findIndex((p) => p.id === targetId);
+      if (targetIndex === -1) return;
+
+      const overlay = document.getElementById("nav-overlay");
+      closeMenu(menu, overlay);
+
+      const direction = targetIndex > currentIndex ? "forward" : "backward";
+      showPage(targetIndex, direction, true);
+    });
+  });
+}
+
+/* ============================================
+   PAGE 9 — TYPEWRITER / HANDWRITING EFFECT
+   ============================================ */
+
+function startReflectionWriting() {
+  const lines = document.querySelectorAll("#page-9 .writing-line");
+  const CHARS_PER_MS = 45; /* milliseconds per character */
+
+  lines.forEach((line) => {
+    const el = line.querySelector(".writing-text");
+    const fullText = el.dataset.text;
+    const delay = parseInt(line.dataset.delay, 10);
+    let index = 0;
+
+    /* Reset in case the user navigated back and returned */
+    el.textContent = "";
+    el.classList.remove("typing");
+
+    setTimeout(() => {
+      el.classList.add("typing");
+
+      const interval = setInterval(() => {
+        el.textContent = fullText.slice(0, index + 1);
+        index++;
+
+        if (index === fullText.length) {
+          clearInterval(interval);
+          el.classList.remove("typing");
+
+          /* After last line finishes, reveal the closing heart */
+          if (line === lines[lines.length - 1]) {
+            setTimeout(() => {
+              const heart = document.querySelector(".reflection-end-mark");
+              if (heart) heart.classList.add("visible");
+            }, 800);
+          }
+        }
+      }, CHARS_PER_MS);
+    }, delay);
+  });
+}
+
+/* ============================================
+   START
+   ============================================ */
+
+document.addEventListener("DOMContentLoaded", init);

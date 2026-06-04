@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <!-- Navigation -->
@@ -49,7 +50,7 @@
       <!-- Page 1 -->
       <!-- ============================================ -->
 
-      <section class="page" id="page-1" data-page="Cover">
+      <section class="page" id="page-1" data-page-title="Cover">
         <div
           class="page-background"
           style="background-image: url(&quot;image/cover.png&quot;)"
@@ -66,14 +67,16 @@
       <!-- Page 2 -->
       <!-- ============================================ -->
 
-      <section class="page" id="page-2" data-page="Introduction">
+      <section class="page" id="page-2" data-page-title="Introduction">
         <div
           class="page-background"
           style="background-image: url(&quot;image/hook.png&quot;)"
         ></div>
         <div class="page-content">
-          <h2>Why do adults still need soft things?</h2>
-          <p>
+          <h2 class="reveal" data-step="1">
+            Why do adults still need soft things?
+          </h2>
+          <p class="reveal" data-step="2">
             This is an interactive story about Jellycat, comfort, loneliness,
             and emotional connection in modern life.
           </p>
@@ -214,10 +217,12 @@
               <img src="image/toy-4.png" alt="More Jellycat toys" />
             </div>
           </div>
+        </div>
+      </section>
 
-          <!-- ============================================ -->
-          <!-- Page 6: Why Jellycat works -->
-          <!-- ============================================ -->
+      <!-- ============================================ -->
+      <!-- Page 6: Why Jellycat works -->
+      <!-- ============================================ -->
 
           <section
             class="page"
@@ -360,67 +365,57 @@
               <!-- end .characteristic-labels -->
             </div>
           </section>
-        </div>
-      </section>
 
       <!-- ============================================ -->
       <!-- Page 7: How it became Popular -->
       <!-- ============================================ -->
-      <!-- Step 7a: base background + bunny + title + body text -->
-      <section class="page" id="page-7" data-page-title="How It Became Popular">
-        <!-- Layer 1: page background (cream paper texture) -->
-        <img
-          class="p7-layer"
-          src="images/p7-background.png"
-          alt=""
-          aria-hidden="true"
-        />
 
-        <!-- Layer 2: bunny illustration, centred, scales up on entry -->
+      <!-- Step 7a: background & bunny & text -->
+      <section class="page" id="page-7" data-page-title="How It Became Popular">
+        <!-- Layer 1: background  -->
+        <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
+
+        <!-- Layer 2: bunny illustration-->
         <img
           class="p7-layer p7-bunny"
-          src="images/p7-bunny.png"
+          src="image/bunny.png"
           alt="Jellycat bunny illustration"
         />
 
-        <!-- Layer 3: title + body text as a PNG placed on the left -->
-        <img
-          class="p7-layer p7-text"
-          src="images/p7-text.png"
-          alt="How It Became Popular — Social media transformed Jellycat from a children's toy into a global cultural phenomenon. Fans share collections, stories, and creative scenes online, turning Jellycat into a symbol of identity, companionship, and emotional expression. Interactive in-store experiences further strengthen emotional connection."
-        />
+        <!-- Layer 3: title & body text  -->
+        <h2 class="p7-title">How It Became Popular</h2>
+        <p>
+          Social media transformed Jellycat from a children’s toy into a global
+          cultural phenomenon. Fans share collections, stories, and creative
+          scenes online, turning Jellycat into a symbol of identity,
+          companionship, and emotional expression. Interactive in-store
+          experiences further strengthen emotional connection by including
+          engaging and performing elements.
+        </p>
       </section>
 
-      <!-- Step 7b: bubble scenes + social icons float up -->
+      <!-- Step 7b: bubble scenes -->
       <section
         class="page page-chapter-7"
         id="page-7b"
         data-page-title="How It Became Popular"
       >
-        <!-- Persistent layers carried over (same images, always visible) -->
-        <img
-          class="p7-layer"
-          src="images/p7-background.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-bunny.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-text.png"
-          alt=""
-          aria-hidden="true"
-        />
+        <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/bunny.png" alt="" aria-hidden="true" />
+        <h2 class="p7-title">How It Became Popular</h2>
+        <p>
+          Social media transformed Jellycat from a children’s toy into a global
+          cultural phenomenon. Fans share collections, stories, and creative
+          scenes online, turning Jellycat into a symbol of identity,
+          companionship, and emotional expression. Interactive in-store
+          experiences further strengthen emotional connection by including
+          engaging and performing elements.
+        </p>
 
         <!-- Bubble 1: top centre — in-store experience scene -->
         <img
           class="p7-layer p7-bubble p7-bubble--1"
-          src="images/p7-bubble-instore.png"
+          src="image/bubble-1.png"
           alt="In-store experience: A playful and engaging purchase that becomes a special memory."
           style="--bubble-delay: 0.3s"
         />
@@ -428,7 +423,7 @@
         <!-- Bubble 2: top right — collect them scene -->
         <img
           class="p7-layer p7-bubble p7-bubble--2"
-          src="images/p7-bubble-collect.png"
+          src="image/bubble-2.png"
           alt="Collect them. Love them. Each Jellycat becomes part of their everyday and their collection."
           style="--bubble-delay: 0.9s"
         />
@@ -436,7 +431,7 @@
         <!-- Bubble 3: bottom right — share and connect online scene -->
         <img
           class="p7-layer p7-bubble p7-bubble--3"
-          src="images/p7-bubble-social.png"
+          src="image/bubble-3.png"
           alt="Share and connect online: They post, share, and express what Jellycat means to them."
           style="--bubble-delay: 1.5s"
         />
@@ -444,7 +439,7 @@
         <!-- Social icons (likes, comments) float upward -->
         <img
           class="p7-layer p7-icons"
-          src="images/p7-social-icons.png"
+          src="image/insta-icons.png"
           alt="Instagram like and comment icons"
           style="--bubble-delay: 2.1s"
         />
@@ -456,56 +451,169 @@
         id="page-7c"
         data-page-title="How It Became Popular"
       >
-        <!-- All previous layers -->
-        <img
-          class="p7-layer"
-          src="images/p7-background.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-bunny.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-text.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-bubble-instore.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-bubble-collect.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-bubble-social.png"
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p7-layer"
-          src="images/p7-social-icons.png"
-          alt=""
-          aria-hidden="true"
-        />
+        <!-- Base layers repeated so they stay visible -->
+        <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/bunny.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/bubble-1.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/bubble-2.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/bubble-3.png" alt="" aria-hidden="true" />
+        <img class="p7-layer" src="image/insta-icons.png" alt="" aria-hidden="true" />
 
-        <!-- Pink message box — fades in bottom left -->
+        <!-- Pink message box fades in on top -->
         <img
           class="p7-layer p7-pink-box"
-          src="images/p7-pink-message.png"
+          src="image/message-pink.png"
           alt="This immersive and creative shopping experience makes Jellycat even more irresistible and captures customers' hearts."
         />
+      </section>
+
+      <!-- ============================================ -->
+      <!-- Page 8: The deeper meaning -->
+      <!-- ============================================ -->
+
+      <section class="page" id="page-8" data-page-title="The Deeper Meaning">
+        <!-- Background -->
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p8.png&quot;)"
+        ></div>
+
+        <!-- Dim overlay -->
+        <div class="p8-dim-overlay"></div>
+
+        <!-- Warm spotlight  -->
+        <div class="p8-spotlight"></div>
+
+        <!-- Left column: main title -->
+        <div class="p8-left">
+          <h2 class="p8-title">
+            Jellycat is<br />
+            <span class="p8-title-highlight">more</span> than a toy.
+          </h2>
+        </div>
+
+        <!-- Right column: body text -->
+        <div class="p8-right p8-body-text">
+          <p>
+            For many people, Jellycat is a
+            <span class="highlight-rose">companion</span> that provides
+            emotional comfort, a way to express
+            <span class="highlight-rose">identity</span>, and a means to
+            <span class="highlight-rose">cope</span> with
+            <span class="highlight-rose">uncertainty and loneliness</span>.
+            These objects become small reminders of
+            <span class="highlight-rose">warmth</span> and
+            <span class="highlight-rose">safety</span> in an overwhelming world.
+          </p>
+        </div>
+      </section>
+
+      <!--
+      Step 8b: three labels -->
+      <section
+        class="page page-chapter-8"
+        id="page-8b"
+        data-page-title="The Deeper Meaning"
+      >
+        <!-- Same background, no overlay or spotlight on this step -->
+        <div
+          class="page-background"
+          style="background-image: url(&quot;image/p8.png&quot;)"
+        ></div>
+
+        <!-- Persist the title so the left side stays consistent -->
+        <div class="p8-left">
+          <h2 class="p8-title">
+            Jellycat is<br />
+            <span class="p8-title-highlight">more</span> than a toy.
+          </h2>
+        </div>
+
+        <!-- Right column: meaning labels + final message -->
+        <div class="p8-right">
+          <div class="meaning-labels">
+            <!-- Label 1: Companion -->
+            <div class="meaning-label" style="--label-delay: 0.3s">
+              <div class="meaning-label__icon">
+                <!-- Icon image you made -->
+                <img src="image/icon-1.png" alt="" aria-hidden="true" />
+              </div>
+              <div class="meaning-label__text">
+                <h3 class="meaning-label__title">COMPANION</h3>
+                <p>A quiet presence when people feel alone.</p>
+              </div>
+            </div>
+
+            <!-- Label 2: Identity -->
+            <div class="meaning-label" style="--label-delay: 0.9s">
+              <div class="meaning-label__icon">
+                <img src="image/icon-2.png" alt="" aria-hidden="true" />
+              </div>
+              <div class="meaning-label__text">
+                <h3 class="meaning-label__title">IDENTITY</h3>
+                <p>
+                  A way to express softness, personality, and emotional taste.
+                </p>
+              </div>
+            </div>
+
+            <!-- Label 3: Comfort -->
+            <div class="meaning-label" style="--label-delay: 1.5s">
+              <div class="meaning-label__icon">
+                <img src="image/icon-3.png" alt="" aria-hidden="true" />
+              </div>
+              <div class="meaning-label__text">
+                <h3 class="meaning-label__title">COMFORT</h3>
+                <p>A small source of warmth when life feels uncertain.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Final message -->
+          <div class="p8-final-message" style="--label-delay: 2.2s">
+            <img
+              src="image/final-message.png"
+              alt="Maybe comfort was never childish — only human."
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- Page 9: Reflection     -->
+      <!-- ============================================ -->
+
+      <section class="page" id="page-9" data-page-title="Reflection">
+        <div
+          class="page-background"
+          style="background-image: url(&quot;images/reflection-bg.png&quot;)"
+        ></div>
+
+        <div class="page-content reflection-content">
+          <div class="writing-line" data-delay="600">
+            <p
+              class="writing-text"
+              data-text="Maybe people do not hold onto soft toys because they refuse to grow up."
+            ></p>
+          </div>
+
+          <div class="writing-line" data-delay="3800">
+            <p
+              class="writing-text"
+              data-text="Maybe they hold onto it because growing up can sometimes feel overwhelming."
+            ></p>
+          </div>
+
+          <div class="writing-line" data-delay="7200">
+            <p
+              class="writing-text"
+              data-text="Maybe comfort was never childish; we just simply forgot how important it is to feel emotionally safe."
+            ></p>
+          </div>
+
+          <!-- Small closing mark that fades in after all writing finishes -->
+          <div class="reflection-end-mark" aria-hidden="true">&#10084;</div>
+        </div>
       </section>
     </div>
   </body>
