@@ -437,6 +437,7 @@ function goBackward() {
 
 function setupScrollListener() {
   let inGesture = false;
+  let endTimer = null; /* <-- Add this line! */
 
   function handleWheel(e) {
     e.preventDefault();
