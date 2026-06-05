@@ -135,7 +135,9 @@ function showPage(newIndex, direction, revealAll = false) {
 
     newPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
     oldPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
-    newPage.classList.add("is-active"); /* starts the step-5 delayed line clock */
+    newPage.classList.add(
+      "is-active",
+    ); /* starts the step-5 delayed line clock */
     newPage.style.opacity = "1";
     oldPage.style.opacity = "0";
 

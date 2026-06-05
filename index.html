@@ -430,17 +430,17 @@
         <div class="p8-dim-overlay"></div>
         <div class="p8-spotlight"></div>
 
-        <!-- Top-left: main title (fades in on entry) -->
-        <div class="p8-left">
+        <!-- Step 1 (on entry): top-left title fades in -->
+        <div class="p8-left reveal" data-step="1">
           <h2 class="p8-title">
             Jellycat is<br />
             <span class="p8-title-highlight">more</span> than a toy.
           </h2>
         </div>
 
-        <!-- Right column: labels + final message (reveal on scroll) -->
+        <!-- Step 2 (scroll): labels then final message -->
         <div class="p8-right">
-          <div class="reveal p8-reveal" data-step="1">
+          <div class="reveal p8-reveal" data-step="2">
             <div class="meaning-labels">
               <!-- Label 1: Companion -->
               <div class="meaning-label" style="--label-delay: 0s">
@@ -482,12 +482,12 @@
             </div>
 
             <!-- Final message — appears after the three labels -->
-            <div class="p8-final-message" style="--label-delay: 2s">
-              <img
-                src="image/final-message.png"
-                alt="Maybe comfort was never childish — only human."
-              />
-            </div>
+            <div
+              class="p8-final-message"
+              style="--label-delay: 2s"
+              role="img"
+              aria-label="Maybe comfort was never childish — only human."
+            ></div>
           </div>
         </div>
       </section>

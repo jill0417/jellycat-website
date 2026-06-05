@@ -817,7 +817,11 @@ img {
 
 #page-7 .p7-text-block p {
   font-family: "Inter", sans-serif;
-  font-size: clamp(0.75rem, 1.1vw, 0.95rem); /* ← smaller so it doesn't cover the illustration */
+  font-size: clamp(
+    0.75rem,
+    1.1vw,
+    0.95rem
+  ); /* ← smaller so it doesn't cover the illustration */
   color: #3a2a1a;
   line-height: 1.7;
 }
@@ -946,7 +950,13 @@ img {
     transform 0.9s ease 1.8s;
 }
 
-.page.is-active .p8-title {
+/* The left column stays in place; the title inside fades in when revealed */
+#page-8 .p8-left {
+  opacity: 1;
+  transform: none;
+}
+
+#page-8 .p8-left.is-revealed .p8-title {
   opacity: 1;
   transform: translateY(0);
 }
@@ -961,12 +971,12 @@ img {
   position: absolute;
   top: 0;
   right: 0;
-  width: 52%;
+  width: 46%; /* narrower + pinned right → content sits further right */
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 48px 60px 24px;
+  padding: 60px 56px 60px 48px;
   z-index: 4;
 }
 
@@ -1002,26 +1012,27 @@ img {
 }
 
 .meaning-label__icon {
-  width: 72px;
-  height: 72px;
+  width: 104px; /* wide + tall box so the circle, line & dot all fit */
+  height: 88px;
   flex-shrink: 0;
-  border-radius: 50%;
   background-repeat: no-repeat;
-  background-size: 1100% auto; /* zoom into the small icon inside the 1897×1068 frame */
+  background-size: 760% auto; /* zoom into the icon inside the 1897×1068 frame */
 }
 
-/* Per-icon image + position (icon sits right-of-centre, lower each time) */
+/* Per-icon image + position. The icon graphic (circle + line + dot) sits
+   right-of-centre and a little lower in each frame.
+   2nd % = vertical: LOWER it if the top of the icon is cut off. */
 .meaning-label__icon--1 {
   background-image: url("image/icon-1.png");
-  background-position: 69% 38%;
+  background-position: 71% 36%;
 }
 .meaning-label__icon--2 {
   background-image: url("image/icon-2.png");
-  background-position: 70% 58%;
+  background-position: 71% 53%;
 }
 .meaning-label__icon--3 {
   background-image: url("image/icon-3.png");
-  background-position: 71% 75%;
+  background-position: 72% 70%;
 }
 
 .meaning-label__title {
@@ -1043,6 +1054,14 @@ img {
 
 /* Final handwritten message image */
 .p8-final-message {
+  width: 420px;
+  max-width: 90%;
+  height: 120px;
+  margin-top: 56px; /* ← gap above the message; raise to push it lower */
+  background-image: url("image/final-message.png");
+  background-repeat: no-repeat;
+  background-size: 333% auto; /* zoom into the message (it sits bottom-right of the frame) */
+  background-position: 96% 97%;
   opacity: 0;
   transform: translateY(10px);
   transition:
@@ -1054,10 +1073,6 @@ img {
 #page-8 .p8-reveal.is-revealed .p8-final-message {
   opacity: 1;
   transform: translateY(0);
-}
-
-.p8-final-message img {
-  max-width: 380px;
 }
 
 /* ============================================
