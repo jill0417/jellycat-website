@@ -1025,14 +1025,19 @@ img {
 .meaning-label__icon--1 {
   background-image: url("image/icon-1.png");
   background-position: 71% 36%;
+  margin-top: 120px;
+}
+.meaning-label__text-1 {
+  margin-top: 120px;
 }
 .meaning-label__icon--2 {
   background-image: url("image/icon-2.png");
   background-position: 71% 53%;
+  margin-bottom: 50px;
 }
 .meaning-label__icon--3 {
   background-image: url("image/icon-3.png");
-  background-position: 72% 78%; /* lower view so the bottom of the icon isn't cut */
+  background-position: 71% 78%; /* lower view so the bottom of the icon isn't cut */
 }
 
 .meaning-label__title {
@@ -1057,7 +1062,8 @@ img {
   width: 840px;
   max-width: 90%;
   height: 240px;
-  margin-top: 80px; /* ← gap above the message; raise to push it lower */
+  margin-left: auto;
+  margin-top: -60px; /* ← pull the message UP; more negative = higher */
   background-image: url("image/final-message.png");
   background-repeat: no-repeat;
   background-size: 333% auto; /* zoom into the message (it sits bottom-right of the frame) */
@@ -1088,16 +1094,18 @@ img {
 
 .writing-line {
   width: 100%;
-  max-width: 700px;
-  margin-bottom: 32px;
+  max-width: none; /* let each message stay on a single row */
+  margin-bottom: 26px;
 }
 
 .writing-text {
-  font-size: clamp(1rem, 2vw, 1.35rem);
-  color: #2e1e0e;
-  line-height: 1.8;
-  font-style: italic;
-  min-height: 1.8em;
+  font-family: "Caveat", cursive; /* handwritten look */
+  font-size: clamp(1.2rem, 2.4vw, 2.4rem);
+  color: #fdf6ec; /* warm white */
+  line-height: 1.5;
+  white-space: nowrap; /* keep each message on one line */
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  min-height: 1.5em;
 }
 
 /* Blinking cursor while a line is being typed */
@@ -1116,13 +1124,78 @@ img {
 
 /* Small heart that appears after all writing finishes */
 .reflection-end-mark {
-  font-size: 1.2rem;
-  color: #c9a0a0;
+  font-size: 1.6rem;
+  color: #ffd9a8;
+  text-shadow: 0 0 12px rgba(255, 200, 140, 0.7);
   opacity: 0;
-  margin-top: 8px;
+  margin-top: 12px;
   transition: opacity 1.2s ease;
 }
 
 .reflection-end-mark.visible {
   opacity: 1;
+}
+
+/* ---- Atmosphere: gradient, pulsing glow, floating sparkles ---- */
+#page-9 .reflection-bg {
+  background: radial-gradient(
+    circle at 50% 38%,
+    #3c2d24 0%,
+    #241a15 55%,
+    #140f0c 100%
+  );
+}
+
+.reflection-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgba(255, 214, 150, 0.18) 0%,
+    transparent 46%
+  );
+  animation: reflectionGlow 6s ease-in-out infinite;
+}
+
+@keyframes reflectionGlow {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.reflection-sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 240, 210, 0.9);
+  box-shadow: 0 0 8px 2px rgba(255, 220, 160, 0.55);
+  opacity: 0;
+  animation: sparkTwinkle 5s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes sparkTwinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1);
+  }
 }
