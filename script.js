@@ -444,8 +444,13 @@ function startReflectionWriting() {
 
   lines.forEach((line) => {
     const el = line.querySelector(".writing-text");
-    const fullText = el.dataset.text;
-    const delay = parseInt(line.dataset.delay, 10);
+    /* Use data-text if present, otherwise the text written inside the <p> */
+    const fullText = (
+      el.dataset.text || el.textContent
+    )
+      .replace(/\s+/g, " ")
+      .trim();
+    const delay = parseInt(line.dataset.delay, 10) || 0;
     let index = 0;
 
     /* Reset in case the user navigated back and returned */
