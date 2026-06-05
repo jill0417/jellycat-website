@@ -275,14 +275,11 @@ function showPage(newIndex, direction, revealAll = false) {
     oldPage.style.opacity = "1";
     oldPage.style.zIndex = "9";
 
-    /* Lock in the starting opacities before transitioning */
     void document.body.offsetWidth;
 
     newPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
     oldPage.style.transition = "opacity " + FADE_DURATION + "ms ease";
-    newPage.classList.add(
-      "is-active",
-    ); /* starts the step-5 delayed line clock */
+    newPage.classList.add("is-active");
     newPage.style.opacity = "1";
     oldPage.style.opacity = "0";
 
@@ -304,31 +301,27 @@ function showPage(newIndex, direction, revealAll = false) {
     return;
   }
 
-  /* Pre-show the incoming page underneath */
   newPage.classList.add("is-next");
   newPage.style.opacity = "1";
   newPage.style.zIndex = "9";
 
-  /* Animate the outgoing page flipping away */
   const animClass =
     direction === "forward" ? "flip-out-forward" : "flip-out-backward";
   oldPage.classList.add(animClass);
   oldPage.style.opacity = "1";
   oldPage.style.zIndex = "11";
 
-  playFlipSound(); /* page-turn sound, in sync with the flip */
+  playFlipSound();
 
   isAnimating = true;
 
-  const FLIP_DURATION = 800; /* match --flip-duration in CSS */
+  const FLIP_DURATION = 800;
 
   setTimeout(() => {
-    /* Clean up old page */
     oldPage.classList.remove(animClass);
     oldPage.style.opacity = "0";
     oldPage.style.zIndex = "0";
 
-    /* Settle new page as current */
     newPage.classList.remove("is-next");
     newPage.classList.add("is-current", "is-active");
     newPage.style.zIndex = "10";
@@ -360,7 +353,6 @@ function updateNav(index) {
   document.body.classList.toggle("dark-nav", darkPages.includes(chapterNumber));
   updateVolumeIcon();
 
-  /* Background music: tense piano on pages 3 & 4, cozy lofi elsewhere */
   setMusicMode([3, 4].includes(chapterNumber) ? "tense" : "cozy");
 
   /* Progress bar */
@@ -373,7 +365,6 @@ function updateNav(index) {
 }
 
 function getChapterFromClasses(section) {
-  /* Fallback: read chapter from class like .page-chapter-4 */
   const match = Array.from(section.classList)
     .join(" ")
     .match(/page-chapter-(\d+)/);
@@ -389,11 +380,8 @@ function triggerPageAnimations(section, direction, revealAll) {
 
   if (reveals.length) {
     if (revealAll) {
-      /* Jumped here via the menu → show everything */
       reveals.forEach((el) => el.classList.add("is-revealed"));
     } else {
-      /* Entering by scroll (either direction) → show only step 1;
-         the rest cascade in gradually as the user keeps scrolling */
       reveals.forEach((el, i) => el.classList.toggle("is-revealed", i === 0));
     }
   }
@@ -405,10 +393,8 @@ function triggerPageAnimations(section, direction, revealAll) {
 
 /* ============================================
    NAVIGATION DECIDERS
-   Decide whether a scroll reveals an in-page step or flips the page.
    ============================================ */
 
-/* Forward: reveal the next hidden step, OR flip to the next page */
 function goForward() {
   if (isAnimating) return;
 
@@ -418,7 +404,7 @@ function goForward() {
   );
 
   if (nextHidden) {
-    nextHidden.classList.add("is-revealed"); /* fade in — NO flip */
+    nextHidden.classList.add("is-revealed");
     return;
   }
 
@@ -427,7 +413,6 @@ function goForward() {
   }
 }
 
-/* Backward: hide the last revealed step, OR flip to the previous page */
 function goBackward() {
   if (isAnimating) return;
 
@@ -437,7 +422,7 @@ function goBackward() {
   );
 
   if (revealed.length > 1) {
-    revealed[revealed.length - 1].classList.remove("is-revealed"); /* NO flip */
+    revealed[revealed.length - 1].classList.remove("is-revealed");
     return;
   }
 
@@ -451,34 +436,25 @@ function goBackward() {
    ============================================ */
 
 function setupScrollListener() {
-  let inGesture = false; /* are we inside one continuous scroll right now? */
-  let endTimer = null; /* fires once the wheel has paused */
+  let inGesture = false;
 
-  /* — Mouse wheel / trackpad — */
   function handleWheel(e) {
     e.preventDefault();
 
-    /* Ignore only the tiniest scroll noise */
     if (Math.abs(e.deltaY) < 4) return;
 
-    /* A "new gesture" = the first event after a quiet pause.
-       Momentum events are continuations, not new gestures. */
     const isNewGesture = !inGesture;
     inGesture = true;
 
-    /* Each event pushes this back. Once events stop for 120ms,
-       the next one will count as a brand-new gesture. */
     clearTimeout(endTimer);
     endTimer = setTimeout(() => {
       inGesture = false;
     }, 120);
 
-    if (!isNewGesture) return; /* swallow the momentum tail → no double flip */
+    if (!isNewGesture) return;
 
     const dir = e.deltaY > 0 ? 1 : -1;
 
-    /* A flip is still running: remember this deliberate swipe and fire it
-       the moment the flip lands, so quick successive scrolls aren't lost. */
     if (isAnimating) {
       pendingNav = dir;
       return;
@@ -540,7 +516,6 @@ function setupHamburger() {
   const hamburger = document.getElementById("hamburger");
   const menu = document.getElementById("nav-menu");
 
-  /* Create overlay element dynamically */
   const overlay = document.createElement("div");
   overlay.id = "nav-overlay";
   document.body.appendChild(overlay);
@@ -582,14 +557,12 @@ function setupNavLinks() {
       const overlay = document.getElementById("nav-overlay");
       closeMenu(menu, overlay);
 
-      /* Already on this page → just restart it from its first step */
       if (targetIndex === currentIndex) {
         resetReveals(pages[currentIndex]);
         triggerPageAnimations(pages[currentIndex], "forward", false);
         return;
       }
 
-      /* Jump to the page and start it at step 1 (scroll reveals the rest) */
       const direction = targetIndex > currentIndex ? "forward" : "backward";
       showPage(targetIndex, direction, false);
     });
@@ -597,23 +570,22 @@ function setupNavLinks() {
 }
 
 /* ============================================
-   PAGE 9 — TYPEWRITER / HANDWRITING EFFECT
+   PAGE 9 —  HANDWRITING EFFECT
    ============================================ */
 
 function startReflectionWriting() {
   const lines = document.querySelectorAll("#page-9 .writing-line");
-  const CHARS_PER_MS = 45; /* milliseconds per character */
+  const CHARS_PER_MS = 45;
 
   lines.forEach((line) => {
     const el = line.querySelector(".writing-text");
-    /* Use data-text if present, otherwise the text written inside the <p> */
+
     const fullText = (el.dataset.text || el.textContent)
       .replace(/\s+/g, " ")
       .trim();
     const delay = parseInt(line.dataset.delay, 10) || 0;
     let index = 0;
 
-    /* Reset in case the user navigated back and returned */
     el.textContent = "";
     el.classList.remove("typing");
 
@@ -628,7 +600,6 @@ function startReflectionWriting() {
           clearInterval(interval);
           el.classList.remove("typing");
 
-          /* After last line finishes, reveal the closing heart */
           if (line === lines[lines.length - 1]) {
             setTimeout(() => {
               const heart = document.querySelector(".reflection-end-mark");
@@ -640,9 +611,5 @@ function startReflectionWriting() {
     }, delay);
   });
 }
-
-/* ============================================
-   START
-   ============================================ */
 
 document.addEventListener("DOMContentLoaded", init);
