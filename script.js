@@ -391,10 +391,9 @@ function updateNav(index) {
 
   document.getElementById("page-title").textContent = title;
 
-  /* Dark-background pages → switch the nav + progress bar to white */
   const darkPages = [3, 4, 9];
   document.body.classList.toggle("dark-nav", darkPages.includes(chapterNumber));
-  updateVolumeIcon(); /* switch the -w / -b icon variant to match the page */
+  updateVolumeIcon();
 
   /* Background music: tense piano on pages 3 & 4, cozy lofi elsewhere */
   setMusicMode([3, 4].includes(chapterNumber) ? "tense" : "cozy");
