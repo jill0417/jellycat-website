@@ -1012,8 +1012,8 @@ img {
 }
 
 .meaning-label__icon {
-  width: 104px; /* wide + tall box so the circle, line & dot all fit */
-  height: 88px;
+  width: 150px; /* bigger box → bigger icon (zoom is relative, so it scales up) */
+  height: 128px;
   flex-shrink: 0;
   background-repeat: no-repeat;
   background-size: 760% auto; /* zoom into the icon inside the 1897×1068 frame */
@@ -1032,20 +1032,20 @@ img {
 }
 .meaning-label__icon--3 {
   background-image: url("image/icon-3.png");
-  background-position: 72% 70%;
+  background-position: 72% 78%; /* lower view so the bottom of the icon isn't cut */
 }
 
 .meaning-label__title {
-  font-size: 0.78rem;
+  font-size: 1rem;
   letter-spacing: 0.18em;
   color: var(--color-highlight-rose);
   font-weight: normal;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-family: "Georgia", serif;
 }
 
 .meaning-label__text p {
-  font-size: 0.88rem;
+  font-size: 1.1rem;
   color: #2e1e0e;
   line-height: 1.6;
   margin: 0;
@@ -1054,10 +1054,10 @@ img {
 
 /* Final handwritten message image */
 .p8-final-message {
-  width: 420px;
+  width: 840px;
   max-width: 90%;
-  height: 120px;
-  margin-top: 56px; /* ← gap above the message; raise to push it lower */
+  height: 240px;
+  margin-top: 80px; /* ← gap above the message; raise to push it lower */
   background-image: url("image/final-message.png");
   background-repeat: no-repeat;
   background-size: 333% auto; /* zoom into the message (it sits bottom-right of the frame) */
