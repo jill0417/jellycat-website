@@ -33,7 +33,11 @@ function getReveals(pageEl) {
 
 /* Hide a page's reveal steps so their entrance animation can replay */
 function resetReveals(pageEl) {
+  /* Hide the steps INSTANTLY (no fade-out flash while the page flips in) */
+  pageEl.classList.add("is-resetting");
   getReveals(pageEl).forEach((el) => el.classList.remove("is-revealed"));
+  void pageEl.offsetWidth; /* force the reset to apply with transitions off */
+  pageEl.classList.remove("is-resetting");
 }
 
 /* The chapter (1–9) a section belongs to */
@@ -49,6 +53,164 @@ function isFadeStep(a, b) {
     b.classList.contains("fade-step") &&
     chapterOf(a) === chapterOf(b)
   );
+}
+
+/* Page-flip sound effect */
+const flipSound = new Audio("sounds/flip-book.mp3");
+flipSound.volume = 0.5;
+let soundMuted = false; /* sound is ON by default */
+
+function playFlipSound() {
+  if (soundMuted) return;
+  flipSound.currentTime = 0; /* rewind so quick page turns retrigger it */
+  flipSound
+    .play()
+    .catch(() => {}); /* ignore autoplay block before first interaction */
+}
+
+function setupVolumeToggle() {
+  const btn = document.getElementById("volume-toggle");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    if (!musicStarted) {
+      /* First interaction is the button → just turn sound ON */
+      startMusic();
+      soundMuted = false;
+    } else {
+      soundMuted = !soundMuted;
+    }
+    updateVolumeIcon();
+    applyMusic(800); /* fade music out/in with the toggle */
+  });
+  updateVolumeIcon();
+}
+
+/* Swap the icon: mute vs on, and light (-w) vs dark (-b) page variant */
+function updateVolumeIcon() {
+  const icon = document.getElementById("volume-icon");
+  if (!icon) return;
+  const tone = document.body.classList.contains("dark-nav") ? "w" : "b";
+  const state = soundMuted ? "mute" : "volume-up";
+  icon.src = "image/" + state + "-" + tone + ".png";
+  icon.alt = soundMuted ? "Sound off" : "Sound on";
+}
+
+/* ============================================
+   BACKGROUND MUSIC
+   cozy = default · tense = pages 3 & 4
+   Both loop continuously; switching zones only crossfades the volume,
+   so the music never restarts when you move between non-tense pages.
+   ============================================ */
+
+const cozyMusic = new Audio("sounds/cozy.mp3");
+const tenseMusic = new Audio("sounds/tense.mp3");
+cozyMusic.loop = true;
+tenseMusic.loop = true;
+cozyMusic.volume = 0;
+tenseMusic.volume = 0;
+
+const MUSIC_VOLUME = 0.3; /* background level (flip sfx is 0.5) */
+let musicStarted = false;
+let musicMode = "cozy"; /* "cozy" | "tense" */
+
+/* Smoothly ramp an audio element's volume to a target over `ms`,
+   using an equal-power curve so a crossfade has no loudness dip */
+function fadeAudio(audio, target, ms) {
+  if (audio._fade) clearInterval(audio._fade);
+  const startVol = audio.volume;
+  const diff = target - startVol;
+  if (Math.abs(diff) < 0.005) {
+    audio.volume = Math.min(1, Math.max(0, target));
+    return;
+  }
+  const steps = Math.max(1, Math.round(ms / 40));
+  let i = 0;
+  audio._fade = setInterval(() => {
+    i++;
+    const p = i / steps;
+    const eased =
+      diff > 0
+        ? Math.sin((p * Math.PI) / 2) /* fade in */
+        : 1 - Math.cos((p * Math.PI) / 2); /* fade out */
+    audio.volume = Math.min(1, Math.max(0, startVol + diff * eased));
+    if (i >= steps) {
+      audio.volume = Math.min(1, Math.max(0, target));
+      clearInterval(audio._fade);
+      audio._fade = null;
+    }
+  }, 40);
+}
+
+/* Fade the two tracks to match the current mode + mute state */
+function applyMusic(ms) {
+  if (!musicStarted) return;
+  const dur = ms || 2600; /* long, smooth cozy <-> tense crossfade */
+  fadeAudio(
+    cozyMusic,
+    !soundMuted && musicMode === "cozy" ? MUSIC_VOLUME : 0,
+    dur,
+  );
+  fadeAudio(
+    tenseMusic,
+    !soundMuted && musicMode === "tense" ? MUSIC_VOLUME : 0,
+    dur,
+  );
+}
+
+/* Switch cozy <-> tense. No-op if unchanged, so the music keeps playing. */
+function setMusicMode(mode) {
+  if (mode === musicMode) return;
+  musicMode = mode;
+  applyMusic();
+}
+
+/* Browsers block autoplay until the user interacts, so start on first input */
+function startMusic() {
+  if (musicStarted) return;
+  musicStarted = true;
+  cozyMusic.play().catch(() => {});
+  tenseMusic.play().catch(() => {});
+  applyMusic(1200);
+}
+
+/* First-visit prompt: the user chooses sound on/off. Their click is also the
+   gesture browsers require before any audio is allowed to play. */
+function setupSoundPrompt() {
+  const prompt = document.getElementById("sound-prompt");
+  if (!prompt) return;
+  const close = () => prompt.classList.add("is-hidden");
+
+  const withSound = document.getElementById("enter-sound");
+  const silent = document.getElementById("enter-silent");
+
+  if (withSound) {
+    withSound.addEventListener("click", () => {
+      soundMuted = false;
+      startMusic();
+      updateVolumeIcon();
+      close();
+    });
+  }
+  if (silent) {
+    silent.addEventListener("click", () => {
+      soundMuted = true;
+      updateVolumeIcon();
+      close();
+    });
+  }
+}
+
+/* Pause the music when the tab/window isn't visible; resume when it's back */
+function setupAudioVisibility() {
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cozyMusic.pause();
+      tenseMusic.pause();
+    } else if (musicStarted && !soundMuted) {
+      cozyMusic.play().catch(() => {});
+      tenseMusic.play().catch(() => {});
+    }
+  });
 }
 
 /* Run a swipe that was queued while a transition was still in flight */
@@ -73,12 +235,27 @@ const TOTAL_CHAPTERS = 9;
    ============================================ */
 
 function init() {
+  prepareReflection();
   showPage(0, null);
   updateNav(0);
   setupHamburger();
   setupNavLinks();
   setupScrollListener();
   setupKeyListener();
+  setupVolumeToggle();
+  setupSoundPrompt();
+  setupAudioVisibility();
+}
+
+/* Move page 9's inline text into data-text and clear it, so it stays hidden
+   until the typewriter writes it (prevents a flash of the full text) */
+function prepareReflection() {
+  document.querySelectorAll("#page-9 .writing-text").forEach((el) => {
+    if (!el.dataset.text) {
+      el.dataset.text = el.textContent.replace(/\s+/g, " ").trim();
+    }
+    el.textContent = "";
+  });
 }
 
 /* ============================================
@@ -117,6 +294,9 @@ function showPage(newIndex, direction, revealAll = false) {
 
   /* Reset the incoming page's steps so they animate in again on re-entry */
   resetReveals(newPage);
+
+  /* Clear page 9's handwriting before it shows, so the full text doesn't flash */
+  if (newPage.id === "page-9") prepareReflection();
 
   /* — Same-chapter fade step (page 4): cross-dissolve, no page flip — */
   if (isFadeStep(oldPage, newPage)) {
@@ -171,6 +351,8 @@ function showPage(newIndex, direction, revealAll = false) {
   oldPage.style.opacity = "1";
   oldPage.style.zIndex = "11";
 
+  playFlipSound(); /* page-turn sound, in sync with the flip */
+
   isAnimating = true;
 
   const FLIP_DURATION = 800; /* match --flip-duration in CSS */
@@ -208,6 +390,14 @@ function updateNav(index) {
     pageChapterMap[sectionId] || getChapterFromClasses(section);
 
   document.getElementById("page-title").textContent = title;
+
+  /* Dark-background pages → switch the nav + progress bar to white */
+  const darkPages = [3, 4, 9];
+  document.body.classList.toggle("dark-nav", darkPages.includes(chapterNumber));
+  updateVolumeIcon(); /* switch the -w / -b icon variant to match the page */
+
+  /* Background music: tense piano on pages 3 & 4, cozy lofi elsewhere */
+  setMusicMode([3, 4].includes(chapterNumber) ? "tense" : "cozy");
 
   /* Progress bar */
   const progress = (chapterNumber / TOTAL_CHAPTERS) * 100;
@@ -428,8 +618,16 @@ function setupNavLinks() {
       const overlay = document.getElementById("nav-overlay");
       closeMenu(menu, overlay);
 
+      /* Already on this page → just restart it from its first step */
+      if (targetIndex === currentIndex) {
+        resetReveals(pages[currentIndex]);
+        triggerPageAnimations(pages[currentIndex], "forward", false);
+        return;
+      }
+
+      /* Jump to the page and start it at step 1 (scroll reveals the rest) */
       const direction = targetIndex > currentIndex ? "forward" : "backward";
-      showPage(targetIndex, direction, true);
+      showPage(targetIndex, direction, false);
     });
   });
 }
@@ -445,9 +643,7 @@ function startReflectionWriting() {
   lines.forEach((line) => {
     const el = line.querySelector(".writing-text");
     /* Use data-text if present, otherwise the text written inside the <p> */
-    const fullText = (
-      el.dataset.text || el.textContent
-    )
+    const fullText = (el.dataset.text || el.textContent)
       .replace(/\s+/g, " ")
       .trim();
     const delay = parseInt(line.dataset.delay, 10) || 0;

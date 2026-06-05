@@ -36,6 +36,88 @@ img {
 }
 
 /* ============================================
+   FIRST-VISIT SOUND PROMPT
+   ============================================ */
+
+.sound-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 20, 12, 0.55);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.5s ease;
+}
+
+.sound-prompt.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sound-prompt__box {
+  background: rgba(255, 250, 244, 0.98);
+  border-radius: 22px;
+  padding: 40px 36px;
+  max-width: 500px;
+  width: 86%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.sound-prompt__title {
+  font-family: "Caveat", cursive;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #3a2a1a;
+  margin-bottom: 8px;
+  max-width: 15em;
+}
+
+.sound-prompt__text {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #5a4636;
+  margin-bottom: 28px;
+}
+
+.sound-prompt__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sound-prompt__btn {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: 1px solid rgba(120, 90, 60, 0.3);
+  background: none;
+  color: #5a4636;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.sound-prompt__btn:hover {
+  background: rgba(120, 90, 60, 0.08);
+}
+
+.sound-prompt__btn--primary {
+  background: #c98a5a;
+  color: #fff;
+  border-color: #c98a5a;
+}
+
+.sound-prompt__btn--primary:hover {
+  background: #b97a4a;
+}
+
+/* ============================================
    NAVIGATION
    ============================================ */
 
@@ -55,6 +137,23 @@ img {
 
 #nav > * {
   pointer-events: auto;
+}
+
+/* Volume / mute button  */
+#volume-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+}
+
+#volume-icon {
+  width: 26px;
+  height: 26px;
+  display: block;
 }
 
 /* Hamburger button */
@@ -86,7 +185,7 @@ img {
   opacity: 0.75;
 }
 
-/* Slide-out nav menu */
+/* nav menu */
 #nav-menu {
   position: fixed;
   top: 0;
@@ -125,7 +224,6 @@ img {
   opacity: 1;
 }
 
-/* Overlay behind the menu */
 #nav-overlay {
   position: fixed;
   inset: 0;
@@ -182,6 +280,25 @@ img {
   opacity: 0.55;
 }
 
+/* Dark-background pages (3, 4, 9), nav & progress bar to white */
+body.dark-nav #hamburger span {
+  background: #ffffff;
+}
+body.dark-nav #page-title {
+  color: #ffffff;
+  opacity: 0.9;
+}
+body.dark-nav #progress-label {
+  color: #ffffff;
+  opacity: 0.85;
+}
+body.dark-nav #progress-bar {
+  background: rgba(255, 255, 255, 0.25);
+}
+body.dark-nav #progress-bar::after {
+  background: #ffffff;
+}
+
 /* ============================================
    BOOK & PAGES
    ============================================ */
@@ -207,20 +324,16 @@ img {
   pointer-events: none;
 }
 
-/* The currently visible page */
 .page.is-current {
   z-index: 10;
   opacity: 1;
   pointer-events: auto;
 }
 
-/* The page directly underneath (pre-loaded so flip reveals it) */
 .page.is-next {
   z-index: 9;
   opacity: 1;
 }
-
-/* Page flipping OUT (forward scroll) */
 .page.flip-out-forward {
   animation: flipOutForward var(--flip-duration) var(--flip-easing) forwards;
   transform-origin: left center;
@@ -229,7 +342,6 @@ img {
   pointer-events: none;
 }
 
-/* Page flipping IN (back scroll — reverse direction) */
 .page.flip-out-backward {
   animation: flipOutBackward var(--flip-duration) var(--flip-easing) forwards;
   transform-origin: right center;
@@ -314,7 +426,7 @@ img {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-bottom: 48px;
+  margin-bottom: 30px;
   animation: scrollBounce 2s ease-in-out infinite;
 }
 
@@ -356,7 +468,6 @@ img {
   color: var(--color-highlight);
 }
 
-/* In-page reveal steps (fade in without a page flip) */
 .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -368,6 +479,12 @@ img {
 .reveal.is-revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+.is-resetting,
+.is-resetting * {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* ============================================
@@ -423,7 +540,6 @@ img {
   line-height: 1.6;
 }
 
-/* Page 4 text — right side */
 .fade-step .page-content {
   align-items: flex-end;
   text-align: left;
@@ -447,7 +563,7 @@ img {
   align-items: flex-end;
 }
 .fade-step .page-content h2 {
-  max-width: 10em; /* forces 3 lines */
+  max-width: 10em;
   font-size: clamp(1.1rem, 2.2vw, 1.8rem);
   line-height: 1.5;
 }
@@ -464,6 +580,12 @@ img {
 
 #page-4-step-5 .page-content .p4-delayed {
   max-width: 16.6em;
+}
+
+.fade-step .page-content h2,
+.fade-step .page-content p:not(.p4-delayed),
+.fade-step .page-content .text-list {
+  opacity: 0;
 }
 
 .fade-step.is-active .page-content h2,
@@ -508,7 +630,6 @@ img {
   max-width: 11em;
 }
 
-/* Step 2 — centered, lifted slightly above middle */
 #page-5b .page-content {
   align-items: center;
   justify-content: center;
@@ -519,18 +640,18 @@ img {
 /* Pink panel */
 #page-5b .desc-wrap {
   position: absolute;
-  top: 35%; /* ← move the WHOLE panel up/down on the page */
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1500px; /* ← make the PANEL wider/narrower here */
+  width: 1500px;
   max-width: 92vw;
-  aspect-ratio: 1897 / 430; /* ← panel height: BIGGER 2nd number = taller box */
+  aspect-ratio: 1897 / 430;
   background: url("image/p5-text-background.png") center 23% / 100% auto
     no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 6%; /* ← lower this to make the text wider */
+  padding: 0 6%;
 }
 
 #page-5b .jellycat-desc {
@@ -543,7 +664,6 @@ img {
   max-width: 30em;
 }
 
-/* Warm accent words: 1999, soft textures, playful and unusual designs */
 .accent {
   color: #cf8a45;
   font-weight: 700;
@@ -576,7 +696,6 @@ img {
   transition-delay: var(--toy-delay, 0s);
 }
 
-/* JS adds .is-active to the section to trigger this */
 .page.is-active .toy-item {
   opacity: 1;
   transform: translateY(0);
@@ -589,12 +708,12 @@ img {
   border-radius: 12px;
 }
 
-/* Page 5 toys — large, pinned across the bottom of the page */
+/* toys  */
 #page-5b .toy-grid {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 3%; /* ← raise/lower the toy row */
+  bottom: 3%;
   width: 100%;
   padding: 0 40px;
   flex-wrap: nowrap;
@@ -609,8 +728,8 @@ img {
 
 #page-5b .toy-item img {
   width: 100%;
-  height: 48vh; /* ← toy size: bigger number = bigger toys */
-  object-fit: cover; /* zoom into the toy, crop the empty landscape sides */
+  height: 48vh;
+  object-fit: cover;
   object-position: center;
 }
 
@@ -618,7 +737,6 @@ img {
    PAGE 6 — WHY JELLYCAT WORKS
    ============================================ */
 
-/* Step 6a — split layout */
 .page-content--6a {
   padding: 0;
   align-items: flex-end;
@@ -641,7 +759,6 @@ img {
   margin-bottom: 24px;
 }
 
-/* Step 1 — the wrapper stays in place; title shows first, body 1s later */
 #page-6 .p6-intro {
   opacity: 1;
   transform: none;
@@ -658,7 +775,7 @@ img {
 }
 
 #page-6 .p6-intro.is-revealed p {
-  animation: p6FadeUp 0.7s ease 1s forwards; /* body arrives 1s after the title */
+  animation: p6FadeUp 0.7s ease 1s forwards;
 }
 
 @keyframes p6FadeUp {
@@ -674,12 +791,10 @@ img {
   font-family: "Georgia", serif;
   letter-spacing: 0.08em;
   color: #7a5a3a;
-  margin: 28px auto 16px; /* auto centres the pill */
+  margin: 28px auto 16px;
   text-align: center;
   font-style: italic;
   width: fit-content;
-  /* soft, see-through wash so it blends with the illustrations instead of
-     reading as a solid pill */
   background: rgba(255, 249, 240, 0.45);
   backdrop-filter: blur(3px);
   padding: 6px 16px;
@@ -700,9 +815,9 @@ img {
 
 .toy-card img {
   width: 100%;
-  height: 30vh; /* ← card size: bigger number = bigger cards */
-  object-fit: cover; /* zoom into the polaroid, crop the empty frame */
-  object-position: 35% center; /* ← lower % shows more of the card's LEFT side */
+  height: 30vh;
+  object-fit: cover;
+  object-position: 35% center;
   border-radius: 8px;
 }
 
@@ -710,7 +825,6 @@ img {
 .characteristic-labels {
   position: absolute;
   inset: 0;
-  /* Labels are positioned individually via their modifier classes */
 }
 
 .char-label {
@@ -727,38 +841,35 @@ img {
   transition-delay: var(--label-delay, 0s);
 }
 
-/* Container itself stays visible; the labels inside animate one by one */
 #page-6 .characteristic-labels {
   opacity: 1;
   transform: none;
 }
 
-/* Labels appear (staggered via --label-delay) when step 3 is revealed */
 #page-6 .characteristic-labels.is-revealed .char-label {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Position each label around the bunny on the left half */
 .char-label--softness {
   top: 10%;
   left: 6%;
-  background: rgba(244, 205, 200, 0.92); /* pink */
+  background: rgba(244, 205, 200, 0.92);
 }
 .char-label--familiarity {
   top: 38%;
   left: 2%;
-  background: rgba(198, 222, 235, 0.92); /* blue */
+  background: rgba(198, 222, 235, 0.92);
 }
 .char-label--nostalgia {
   bottom: 16%;
-  left: 32%; /* bottom-right of the bunny */
-  background: rgba(206, 226, 199, 0.92); /* green */
+  left: 32%;
+  background: rgba(206, 226, 199, 0.92);
 }
 .char-label--security {
   top: 28%;
-  left: 36%; /* moved right so it clears the bunny */
-  background: rgba(247, 226, 190, 0.92); /* warm yellow */
+  left: 36%;
+  background: rgba(247, 226, 190, 0.92);
 }
 
 .label-text {
@@ -784,27 +895,25 @@ img {
    PAGE 7 — HOW IT BECAME POPULAR
    ============================================ */
 
-/* All layers share the same full-viewport canvas */
 .p7-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fill the viewport — all layers crop identically so they stay aligned */
+  object-fit: cover;
 }
 
-/* Step 1 — title & body on the left */
 #page-7 .p7-text-block {
   position: absolute;
   top: 0;
   left: 0;
-  width: 32%; /* ← narrower so it clears the bunny; lower = narrower */
+  width: 32%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* top-aligned instead of centred */
-  padding: 120px 28px 80px 80px; /* top = height · last = gap from left edge */
+  justify-content: flex-start;
+  padding: 120px 28px 80px 80px;
   z-index: 4;
 }
 
@@ -817,16 +926,11 @@ img {
 
 #page-7 .p7-text-block p {
   font-family: "Inter", sans-serif;
-  font-size: clamp(
-    0.75rem,
-    1.1vw,
-    0.95rem
-  ); /* ← smaller so it doesn't cover the illustration */
+  font-size: clamp(0.75rem, 1.1vw, 0.95rem);
   color: #3a2a1a;
   line-height: 1.7;
 }
 
-/* Bunny scales up slightly on entry */
 .p7-bunny {
   opacity: 0;
   transform: scale(0.96);
@@ -840,7 +944,6 @@ img {
   transform: scale(1);
 }
 
-/* Bubble scenes — staggered fade + slight rise */
 .p7-bubble {
   opacity: 0;
   transform: translateY(12px);
@@ -850,11 +953,10 @@ img {
   transition-delay: var(--bubble-delay, 0s);
 }
 
-/* Step 2 container — covers the page; only the bubbles inside fade in */
 #page-7 .p7-scenes {
   position: absolute;
   inset: 0;
-  opacity: 1; /* override .reveal so the wrapper itself doesn't fade */
+  opacity: 1;
   transform: none;
 }
 
@@ -863,7 +965,6 @@ img {
   transform: translateY(0);
 }
 
-/* Social icons float upward — appear after the bubbles (larger --bubble-delay) */
 .p7-icons {
   opacity: 0;
   transform: translateY(20px);
@@ -878,7 +979,6 @@ img {
   transform: translateY(-12px);
 }
 
-/* Step 3 — pink message box wrapper fades in on reveal */
 #page-7 .p7-pink-wrap {
   position: absolute;
   inset: 0;
@@ -888,7 +988,6 @@ img {
    PAGE 8 — THE DEEPER MEANING
    ============================================ */
 
-/* Dim overlay — covers full page, fades away on entry */
 .p8-dim-overlay {
   position: absolute;
   inset: 0;
@@ -902,7 +1001,6 @@ img {
   opacity: 0;
 }
 
-/* Warm spotlight — radial gradient circle over the Jellycat */
 .p8-spotlight {
   position: absolute;
   top: 50%;
@@ -925,7 +1023,6 @@ img {
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Left column: title */
 .p8-left {
   position: absolute;
   top: 0;
@@ -933,8 +1030,8 @@ img {
   width: 48%;
   height: 100%;
   display: flex;
-  align-items: flex-start; /* top-aligned */
-  padding: 110px 40px 0 48px; /* first number = distance from the top */
+  align-items: flex-start;
+  padding: 110px 40px 0 48px;
   z-index: 4;
 }
 
@@ -950,7 +1047,6 @@ img {
     transform 0.9s ease 1.8s;
 }
 
-/* The left column stays in place; the title inside fades in when revealed */
 #page-8 .p8-left {
   opacity: 1;
   transform: none;
@@ -966,12 +1062,11 @@ img {
   font-style: italic;
 }
 
-/* Right column: body text + labels */
 .p8-right {
   position: absolute;
   top: 0;
   right: 0;
-  width: 46%; /* narrower + pinned right → content sits further right */
+  width: 46%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -980,7 +1075,6 @@ img {
   z-index: 4;
 }
 
-/* Step 1 wrapper — stays in place; labels inside animate one by one on reveal */
 #page-8 .p8-reveal {
   opacity: 1;
   transform: none;
@@ -1012,32 +1106,23 @@ img {
 }
 
 .meaning-label__icon {
-  width: 150px; /* bigger box → bigger icon (zoom is relative, so it scales up) */
-  height: 128px;
+  width: 150px;
   flex-shrink: 0;
   background-repeat: no-repeat;
-  background-size: 760% auto; /* zoom into the icon inside the 1897×1068 frame */
+  background-size: 760% auto;
 }
 
-/* Per-icon image + position. The icon graphic (circle + line + dot) sits
-   right-of-centre and a little lower in each frame.
-   2nd % = vertical: LOWER it if the top of the icon is cut off. */
 .meaning-label__icon--1 {
   background-image: url("image/icon-1.png");
-  background-position: 71% 36%;
-  margin-top: 120px;
-}
-.meaning-label__text-1 {
-  margin-top: 120px;
+  background-position: 71% 37%;
 }
 .meaning-label__icon--2 {
   background-image: url("image/icon-2.png");
   background-position: 71% 53%;
-  margin-bottom: 50px;
 }
 .meaning-label__icon--3 {
   background-image: url("image/icon-3.png");
-  background-position: 71% 78%; /* lower view so the bottom of the icon isn't cut */
+  background-position: 71% 78%;
 }
 
 .meaning-label__title {
@@ -1057,16 +1142,16 @@ img {
   max-width: none;
 }
 
-/* Final handwritten message image */
+/* Final message */
 .p8-final-message {
   width: 840px;
   max-width: 90%;
   height: 240px;
   margin-left: auto;
-  margin-top: -60px; /* ← pull the message UP; more negative = higher */
+  margin-top: -60px;
   background-image: url("image/final-message.png");
   background-repeat: no-repeat;
-  background-size: 333% auto; /* zoom into the message (it sits bottom-right of the frame) */
+  background-size: 333% auto;
   background-position: 96% 97%;
   opacity: 0;
   transform: translateY(10px);
@@ -1094,22 +1179,23 @@ img {
 
 .writing-line {
   width: 100%;
-  max-width: none; /* let each message stay on a single row */
+  max-width: none;
   margin-bottom: 26px;
 }
 
-.writing-text {
-  font-family: "Caveat", cursive; /* handwritten look */
+#page-9 .writing-text {
+  font-family: "Caveat", cursive;
   font-size: clamp(1.2rem, 2.4vw, 2.4rem);
-  color: #ffffff; /* white */
-  text-align: center; /* centre each line */
+  color: #ffffff;
+  text-align: center;
+  max-width: none;
+  width: 100%;
   line-height: 1.5;
-  white-space: nowrap; /* keep each message on one line */
+  white-space: nowrap;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
   min-height: 1.5em;
 }
 
-/* Blinking cursor while a line is being typed */
 .writing-text.typing::after {
   content: "|";
   display: inline-block;
@@ -1123,7 +1209,6 @@ img {
   }
 }
 
-/* Small heart that appears after all writing finishes */
 .reflection-end-mark {
   font-size: 1.6rem;
   color: #ffd9a8;
@@ -1137,7 +1222,6 @@ img {
   opacity: 1;
 }
 
-/* ---- Atmosphere: gradient, pulsing glow, floating sparkles ---- */
 #page-9 .reflection-bg {
   background: radial-gradient(
     circle at 50% 38%,

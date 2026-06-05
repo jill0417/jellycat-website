@@ -11,10 +11,32 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Caveat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=3" />
-    <script src="script.js?v=3" defer></script>
+    <link rel="stylesheet" href="style.css?v=17" />
+    <script src="script.js?v=17" defer></script>
   </head>
   <body>
+    <!-- First-visit sound prompt -->
+    <div id="sound-prompt" class="sound-prompt">
+      <div class="sound-prompt__box">
+        <h2 class="sound-prompt__title">Welcome to the Jellycat Story</h2>
+        <p class="sound-prompt__text">
+          This experience is best with sound.<br />
+          Turn on the volume for a more immersive journey.
+        </p>
+        <div class="sound-prompt__buttons">
+          <button
+            id="enter-sound"
+            class="sound-prompt__btn sound-prompt__btn--primary"
+          >
+            Enter with sound
+          </button>
+          <button id="enter-silent" class="sound-prompt__btn">
+            Continue without
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="nav">
       <button id="hamburger" aria-label="Open menu">
@@ -23,6 +45,9 @@
         <span></span>
       </button>
       <span id="page-title">Cover</span>
+      <button id="volume-toggle" aria-label="Toggle sound">
+        <img id="volume-icon" src="image/volume-up-b.png" alt="Sound on" />
+      </button>
       <div id="nav-menu">
         <ul>
           <li><a href="#page-1" data-page="1">01 - cover</a></li>
@@ -258,9 +283,7 @@
         ></div>
 
         <div class="page-content page-content--6a">
-          <!-- Right column: text + personality cards -->
           <div class="p6-right">
-            <!-- Step 1 (on entry): title, then body 1s later -->
             <div class="reveal p6-intro" data-step="1">
               <h2 class="p6-title">Why Jellycat Works</h2>
 
@@ -283,7 +306,7 @@
               </p>
             </div>
 
-            <!-- Step 2 (scroll): personality cards -->
+            <!--personality cards -->
             <div class="reveal toy-cards-block" data-step="2">
               <p class="toy-cards-label">
                 Each Jellycat has a name and a personality
@@ -302,7 +325,7 @@
             </div>
           </div>
 
-          <!-- Step 3 (scroll): characteristic labels appear one by one round the bunny -->
+          <!-- characteristic labels  -->
           <div class="reveal characteristic-labels" data-step="3">
             <div
               class="char-label char-label--softness"
@@ -355,7 +378,6 @@
       <!-- ============================================ -->
 
       <section class="page" id="page-7" data-page-title="How It Became Popular">
-        <!-- Base layers (always visible; bunny animates on entry) -->
         <img class="p7-layer" src="image/p7.png" alt="" aria-hidden="true" />
         <img
           class="p7-layer p7-bunny"
@@ -363,7 +385,6 @@
           alt="Jellycat bunny illustration"
         />
 
-        <!-- Step 1 (on entry): title & body text on the left -->
         <div class="reveal p7-text-block" data-step="1">
           <h2 class="p7-title">How It Became Popular</h2>
           <p>
@@ -376,7 +397,7 @@
           </p>
         </div>
 
-        <!-- Step 2 (scroll): bubble scenes appear one by one, icons after -->
+        <!-- bubble scenes appear  -->
         <div class="reveal p7-scenes" data-step="2">
           <img
             class="p7-layer p7-bubble p7-bubble--1"
@@ -396,7 +417,7 @@
             alt="Share and connect online: they post and express what Jellycat means to them."
             style="--bubble-delay: 2.3s"
           />
-          <!-- Instagram comment + link icons appear after the bubbles -->
+          <!-- Instagram comment & link icons  -->
           <img
             class="p7-layer p7-icons"
             src="image/insta-icons.png"
@@ -405,7 +426,7 @@
           />
         </div>
 
-        <!-- Step 3 (scroll): pink quote box -->
+        <!--  pink quote box -->
         <div class="reveal p7-pink-wrap" data-step="3">
           <img
             class="p7-layer p7-pink-box"
@@ -425,12 +446,9 @@
           class="page-background"
           style="background-image: url(&quot;image/p8.png&quot;)"
         ></div>
-
-        <!-- Dim overlay + warm spotlight (animate on entry) -->
         <div class="p8-dim-overlay"></div>
         <div class="p8-spotlight"></div>
 
-        <!-- Step 1 (on entry): top-left title fades in -->
         <div class="p8-left reveal" data-step="1">
           <h2 class="p8-title">
             Jellycat is<br />
@@ -438,7 +456,6 @@
           </h2>
         </div>
 
-        <!-- Step 2 (scroll): labels then final message -->
         <div class="p8-right">
           <div class="reveal p8-reveal" data-step="2">
             <div class="meaning-labels">
@@ -480,8 +497,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Final message — appears after the three labels -->
             <div
               class="p8-final-message"
               style="--label-delay: 2s"
@@ -497,7 +512,6 @@
       <!-- ============================================ -->
 
       <section class="page" id="page-9" data-page-title="Reflection">
-        <!-- Atmosphere: warm-dark gradient + soft pulsing glow + sparkles -->
         <div class="page-background reflection-bg"></div>
         <div class="reflection-glow" aria-hidden="true"></div>
         <div class="reflection-sparks" aria-hidden="true">
@@ -530,8 +544,6 @@
               important it is to feel emotionally safe.
             </p>
           </div>
-
-          <!-- Small closing mark that fades in after all writing finishes -->
           <div class="reflection-end-mark" aria-hidden="true">&#10084;</div>
         </div>
       </section>
