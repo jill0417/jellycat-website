@@ -1101,7 +1101,8 @@ img {
 .writing-text {
   font-family: "Caveat", cursive; /* handwritten look */
   font-size: clamp(1.2rem, 2.4vw, 2.4rem);
-  color: #fdf6ec; /* warm white */
+  color: #ffffff; /* white */
+  text-align: center; /* centre each line */
   line-height: 1.5;
   white-space: nowrap; /* keep each message on one line */
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
